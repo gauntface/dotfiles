@@ -30,16 +30,13 @@ function isCorpInstall() {
     echo ""
 }
 
-function initTempDir() {
-    TEMP_DIR="$(mktemp -d)"
-    ERROR_LOG="${TEMP_DIR}/dotfile-install-err.log"
-}
-
 function setupDirectories() {
     PROJECTS_DIR="${HOME}/Projects"
     TOOLS_DIR="${HOME}/Projects/Tools"
     CODE_DIR="${HOME}/Projects/Code"
     DOTFILES_DIR="${HOME}/Projects/Tools/dotfiles"
+    TEMP_DIR="$(mktemp -d)"
+    ERROR_LOG="${TEMP_DIR}/dotfile-install-err.log"
 
     echo -e "📂  Setting up directories..."
     echo -e "\tProjects:\t${PROJECTS_DIR}"
@@ -172,8 +169,6 @@ echo -e "\n👢  Bootstrapping @gauntface's Dotfiles"
 echo -e "👟 Running on ${PLATFORM}\n"
 
 isCorpInstall
-
-initTempDir
 
 setupDirectories
 
