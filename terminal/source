@@ -1,0 +1,20 @@
+TERMINAL_DIR="${HOME}/Projects/Tools/dotfiles/terminal"
+
+# Add alises
+source "${TERMINAL_DIR}/aliases"
+
+PLATFORM="$(awk -F= '/^NAME/{print $2}' /etc/os-release)"
+case "${PLATFORM}" in
+    Ubuntu*)
+        source "${TERMINAL_DIR}/source-ubuntu"
+        ;;
+    Fedora*)
+    	source "${TERMINAL_DIR}/source-fedora"
+        ;;
+    Darwin*)
+        # NOOP
+        ;;
+    *)
+        # NOOP
+        ;;
+esac

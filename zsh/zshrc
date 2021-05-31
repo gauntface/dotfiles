@@ -32,3 +32,6 @@ CORP_ZSHRC="${HOME}/Projects/Tools/corp-dotfiles/assets/corp.zshrc"
 if [[ -r $CORP_ZSHRC ]]; then
     source $CORP_ZSHRC
 fi
+
+# Load dotfiles
+source "${HOME}/Projects/Tools/dotfiles/terminal/source"

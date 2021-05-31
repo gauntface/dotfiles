@@ -1,0 +1,20 @@
+# Make Nautilus open with same command as OS X
+open() {
+    nautilus $1 &>/dev/null & disown
+}
+
+# Enable applications to run with sudo on Wayland.
+# https://askubuntu.com/questions/961967/why-dont-gksu-gksudo-or-launching-a-graphical-application-with-sudo-work-with-w/961978#961978
+gks () {
+    if [ $XDG_SESSION_TYPE = "wayland" ]; then
+        xhost +si:localuser:root;
+    fi
+    sudo -H "$@";
+    if [ $XDG_SESSION_TYPE = "wayland" ]; then
+        xhost -si:localuser:root;
+    fi
+}
+
+# Short term fix for synaptic on Ubuntu
+# Added on 2019-01-17.
+alias synaptic='gks synaptic'
