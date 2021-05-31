@@ -121,6 +121,8 @@ function setupZSHRC() {
   git clone https://github.com/dracula/zsh.git "${HOME}/.custom-zsh/themes/dracula"
   ln -s ${HOME}/.custom-zsh/themes/dracula/dracula.zsh-theme ${HOME}/.custom-zsh/themes/dracula.zsh-theme
 
+  dconf load /org/gnome/terminal/legacy/profiles:/ < "${DOTFILES_DIR}/gnome-terminal/profiles.dconf"
+
   echo -e "source ${DOTFILES_DIR}/zsh/zshrc" > "${ZSH_FILE}"
   echo -e "\n\t✅  Done\n"
 }
