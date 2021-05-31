@@ -118,6 +118,9 @@ function setupZSHRC() {
     rm "${ZSH_FILE}" &> ${ERROR_LOG}
   fi
 
+  git clone https://github.com/dracula/zsh.git "${HOME}/.custom-zsh/themes/dracula"
+  ln -s ${HOME}/.custom-zsh/themes/dracula/dracula.zsh-theme ${HOME}/.custom-zsh/themes/dracula.zsh-theme
+
   echo -e "source ${DOTFILES_DIR}/zsh/zshrc" > "${ZSH_FILE}"
   echo -e "\n\t✅  Done\n"
 }
