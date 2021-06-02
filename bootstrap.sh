@@ -67,8 +67,9 @@ function installChrome() {
           sudo apt-get install -y $chrome_version &> ${ERROR_LOG}
           ;;
       Fedora*)
-          sudo dnf update 
-          sudo dnf install $chrome_version
+          sudo dnf install fedora-workstation-repositories &> ${ERROR_LOG}
+          sudo dnf config-manager --set-enabled google-chrome &> ${ERROR_LOG}
+          sudo dnf install -y $chrome_version &> ${ERROR_LOG}
           ;;
       *)
             echo "Running on unknown platform: ${PLATFORM}" > "$ERROR_LOG"
@@ -76,6 +77,13 @@ function installChrome() {
             exit 1
             ;;
   esac
+  
+  # Try and open chrome since it may have been install in the previous step but do not error if it fails
+  (google-chrome gauntface.com || true) &> /dev/null &
+
+  echo -e "\t👷 Please setup Chrome and press enter to continue\n"
+  read -p ""
+  
   echo -e "\n\t✅  Done\n"
 }
 
