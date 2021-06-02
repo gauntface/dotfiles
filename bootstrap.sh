@@ -159,10 +159,10 @@ function runSetup() {
     case "${OS}" in
         Linux*)
             # `source` is used so the script inherits environment variables
-            # source "${DOTFILES_DIR}/setup.sh"
+            source "${DOTFILES_DIR}/setup.sh"
             ;;
         Darwin*)
-            # source "${DOTFILES_DIR}/setup.sh"
+            source "${DOTFILES_DIR}/setup.sh"
             ;;
         *)
             echo "Running on unknown environment: ${unameOut}" > "$ERROR_LOG"
