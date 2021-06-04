@@ -118,8 +118,8 @@ function setupZSHRC() {
     rm "${ZSH_FILE}" &> ${ERROR_LOG}
   fi
 
-  git clone https://github.com/dracula/zsh.git "${HOME}/.custom-zsh/themes/dracula"
-  ln -s ${HOME}/.custom-zsh/themes/dracula/dracula.zsh-theme ${HOME}/.custom-zsh/themes/dracula.zsh-theme
+  git clone https://github.com/dracula/zsh.git "${HOME}/.custom-zsh/themes/dracula" &> ${ERROR_LOG}
+  ln -s ${HOME}/.custom-zsh/themes/dracula/dracula.zsh-theme ${HOME}/.custom-zsh/themes/dracula.zsh-theme &> ${ERROR_LOG}
 
   dconf load /org/gnome/terminal/legacy/profiles:/ < "${DOTFILES_DIR}/gnome-terminal/profiles.dconf"
 
@@ -178,7 +178,7 @@ function installVSCode() {
           ;;
       Fedora*)
           sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-          cat <<EOF | sudo tee /etc/yum.repos.d/vscode.repo
+          cat <<EOF | sudo tee /etc/yum.repos.d/vscode.repo > /dev/null
 [code]
 name=Visual Studio Code
 baseurl=https://packages.microsoft.com/yumrepos/vscode
