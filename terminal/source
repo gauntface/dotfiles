@@ -3,6 +3,16 @@ TERMINAL_DIR="${HOME}/Projects/Tools/dotfiles/terminal"
 # Add alises
 source "${TERMINAL_DIR}/aliases"
 
+# Add NPM-Packages directory
+export NPM_PACKAGES="${HOME}/.npm-packages"
+export NODE_PATH="$NPM_PACKAGES/lib/node_modules${NODE_PATH:+:$NODE_PATH}"
+export PATH="$NPM_PACKAGES/bin:$PATH"
+
+# Add go to path
+export PATH=$PATH:/usr/local/go/bin
+export GOPATH="${HOME}/Projects/go"
+export PATH=$PATH:${GOPATH}/bin
+
 PLATFORM="$(awk -F= '/^NAME/{print $2}' /etc/os-release)"
 case "${PLATFORM}" in
     Ubuntu*)
