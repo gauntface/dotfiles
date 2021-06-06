@@ -17,3 +17,8 @@ alias t='cd ~/Projects/Tools'
 
 # Start local server
 alias server='python3 -m http.server --bind 127.0.0.1'
+
+# Git
+alias gr="git reset --hard --recurse-submodule"
+alias gu="git fetch origin && git pull && git submodule update --init --recursive"
+alias gp="git add . && git commit -a && git push --recurse-submodules=on-demand"
