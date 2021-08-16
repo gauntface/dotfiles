@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PLATFORM="$(awk -F= '/^NAME/{print $2}' /etc/os-release)"
+PLATFORM="$(awk -F= '/^NAME/{print $2}' /etc/os-release | xargs)"
 
 case "${PLATFORM}" in
       Ubuntu* | Debian*)
@@ -10,7 +10,7 @@ case "${PLATFORM}" in
           echo "Hello Fedora"
           ;;
       *)
-          echo "Running on unknown platform: ${PLATFORM}"
+          echo "Running on unknown platform: '${PLATFORM}'"
           exit 1
           ;;
   esac
