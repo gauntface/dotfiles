@@ -3,7 +3,7 @@
 # Catch and log errors
 trap uncaughtError ERR
 
-PLATFORM="$(awk -F= '/^NAME/{print $2}' /etc/os-release)"
+PLATFORM="$(awk -F= '/^NAME/{print $2}' /etc/os-release | xargs)"
 OS="$(uname -s)"
 
 function uncaughtError {
@@ -35,7 +35,7 @@ function installCommonDeps() {
   echo -e "📦  Installing common dependencies..."
   deps="gimp inkscape"
   case "${PLATFORM}" in
-      Ubuntu*)
+      Ubuntu* | Debian*)
           sudo apt-get install -y $deps build-essential synaptic gparted pdfsam &> ${ERROR_LOG}
           ;;
       Fedora*)
@@ -63,7 +63,7 @@ function installNode() {
   if ! [ -x "$(command -v node)" ]; then
     NODE_VERSION=16
     case "${PLATFORM}" in
-      Ubuntu*)
+      Ubuntu* | Debian*)
           curl -sL "https://deb.nodesource.com/setup_${NODE_VERSION}.x" | sudo bash - &> ${ERROR_LOG}
           sudo apt-get install -y nodejs &> ${ERROR_LOG}
           ;;
@@ -92,7 +92,7 @@ function installZSH() {
 
   echo -e "📦  Installing ZSH..."
   case "${PLATFORM}" in
-    Ubuntu*)
+    Ubuntu* | Debian*)
         sudo apt-get install -y zsh &> ${ERROR_LOG}
         ;;
     Fedora*)
@@ -104,7 +104,7 @@ function installZSH() {
         echo -e "\t🤷 Unknown platform '${PLATFORM}'"
         ;;
   esac
-  
+
   echo -e "📦  Installing oh-my-zsh..."
   curl -sL "https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh" | zsh - &> ${ERROR_LOG}
   echo -e "\n\t✅  Done\n"
@@ -142,7 +142,7 @@ function installGauntfacePlymouth() {
   if [[ "${IS_CORP_INSTALL}" = true ]]; then
     return
   fi
-  
+
   echo -e "📦  Installing Gauntface Plymouth Theme..."
   case "${OS}" in
       Linux*)
@@ -163,10 +163,10 @@ function installVSCode() {
   if [[ "${IS_CORP_INSTALL}" = true ]]; then
     return
   fi
-  
+
   echo -e "📝  Installing VSCode..."
   case "${PLATFORM}" in
-      Ubuntu*)
+      Ubuntu* | Debian*)
           curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
           sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
           rm microsoft.gpg
@@ -201,10 +201,10 @@ function installEmojiFont() {
   if [[ "${IS_CORP_INSTALL}" = true ]]; then
     return
   fi
-  
+
   echo -e "📝  Installing Emoji..."
   case "${PLATFORM}" in
-      Ubuntu*)
+      Ubuntu* | Debian*)
           sudo apt-get install -y fonts-noto-color-emoji &> ${ERROR_LOG}
           ;;
       Fedora*)
@@ -225,7 +225,7 @@ function installGo() {
   if [[ "${IS_CORP_INSTALL}" = true ]]; then
     return
   fi
-  
+
   echo -e "📝  Installing Go..."
   case "${OS}" in
       Linux*)
@@ -245,7 +245,7 @@ function setupPrivateDotfiles() {
   if [[ "${IS_CORP_INSTALL}" = true ]]; then
     return
   fi
-  
+
   echo -e "️️🖥️  Setting up Private dotfiles..."
   git clone git@github.com:gauntface/private-dotfiles.git ${PRIV_DOTFILES_DIR} &> ${ERROR_LOG}
   source "${PRIV_DOTFILES_DIR}/setup.sh"
