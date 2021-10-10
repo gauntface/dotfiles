@@ -39,7 +39,7 @@ function installCommonDeps() {
           sudo apt-get install -y $deps build-essential synaptic gparted pdfsam &> ${ERROR_LOG}
           ;;
       Fedora*)
-          sudo dnf install -y $deps pdfshuffler gcc-c++ &> ${ERROR_LOG}
+          sudo dnf install -y $deps pdfshuffler gcc-c++ transmission &> ${ERROR_LOG}
           ;;
       *)
           # NOOP
@@ -104,7 +104,7 @@ function installZSH() {
         echo -e "\t🤷 Unknown platform '${PLATFORM}'"
         ;;
   esac
-  
+
   echo -e "📦  Installing oh-my-zsh..."
   curl -sL "https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh" | zsh - &> ${ERROR_LOG}
   echo -e "\n\t✅  Done\n"
@@ -142,7 +142,7 @@ function installGauntfacePlymouth() {
   if [[ "${IS_CORP_INSTALL}" = true ]]; then
     return
   fi
-  
+
   echo -e "📦  Installing Gauntface Plymouth Theme..."
   case "${OS}" in
       Linux*)
@@ -163,7 +163,7 @@ function installVSCode() {
   if [[ "${IS_CORP_INSTALL}" = true ]]; then
     return
   fi
-  
+
   echo -e "📝  Installing VSCode..."
   case "${PLATFORM}" in
       Ubuntu*)
@@ -201,7 +201,7 @@ function installEmojiFont() {
   if [[ "${IS_CORP_INSTALL}" = true ]]; then
     return
   fi
-  
+
   echo -e "📝  Installing Emoji..."
   case "${PLATFORM}" in
       Ubuntu*)
@@ -225,7 +225,7 @@ function installGo() {
   if [[ "${IS_CORP_INSTALL}" = true ]]; then
     return
   fi
-  
+
   echo -e "📝  Installing Go..."
   case "${OS}" in
       Linux*)
@@ -245,7 +245,7 @@ function setupPrivateDotfiles() {
   if [[ "${IS_CORP_INSTALL}" = true ]]; then
     return
   fi
-  
+
   echo -e "️️🖥️  Setting up Private dotfiles..."
   git clone git@github.com:gauntface/private-dotfiles.git ${PRIV_DOTFILES_DIR} &> ${ERROR_LOG}
   source "${PRIV_DOTFILES_DIR}/setup.sh"
