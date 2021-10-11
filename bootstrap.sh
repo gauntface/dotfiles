@@ -3,7 +3,7 @@
 # Catch and log errors
 trap uncaughtError ERR
 
-PLATFORM="$(awk -F= '/^NAME/{print $2}' /etc/os-release)"
+PLATFORM="$(awk -F= '/^NAME/{print $2}' /etc/os-release | xargs)"
 OS="$(uname -s)"
 
 function uncaughtError {
@@ -53,11 +53,11 @@ function installChrome() {
   if [[ "${IS_CORP_INSTALL}" = true ]]; then
     return
   fi
-  
+
   echo -e "🌎  Installing Chrome..."
-  chrome_version="google-chrome-stable" 
+  chrome_version="google-chrome-stable"
   case "${PLATFORM}" in
-      Ubuntu*)
+      Ubuntu* | Debian*)
           if [ ! -f /etc/apt/sources.list.d/google-chrome.list ]; then
             wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - &> ${ERROR_LOG}
 
@@ -77,13 +77,13 @@ function installChrome() {
             exit 1
             ;;
   esac
-  
+
   # Try and open chrome since it may have been install in the previous step but do not error if it fails
   (google-chrome gauntface.com || true) &> /dev/null &
 
   echo -e "\t👷 Please setup Chrome and press enter to continue\n"
   read -p ""
-  
+
   echo -e "\n\t✅  Done\n"
 }
 
@@ -92,7 +92,7 @@ function installGit() {
 
     deps="git xclip"
     case "${PLATFORM}" in
-        Ubuntu*)
+        Ubuntu* | Debian*)
             sudo apt-get install -y $deps &> ${ERROR_LOG}
             ;;
         Fedora*)
@@ -116,7 +116,7 @@ function setupSSHKeys() {
         ssh-add "~/${expected_ssh_file}"
     fi
 
-    
+
     case "${OS}" in
         Linux*)
             xclip -selection clipboard < ~/${expected_ssh_file}.pub
@@ -132,12 +132,12 @@ function setupSSHKeys() {
     esac
 
   echo -e "📋  Your SSH key has been copied to your clipboard, please add it to https://github.com/settings/keys"
-  
+
   # Try and open chrome since it may have been install in the previous step but do not error if it fails
   google-chrome github.com/settings/keys || true
 
   read -p "Press enter to continue"
-  
+
   echo -e "\n\t✅  Done\n"
 }
 

@@ -3,7 +3,7 @@
 # Catch and log errors
 trap uncaughtError ERR
 
-PLATFORM="$(awk -F= '/^NAME/{print $2}' /etc/os-release)"
+PLATFORM="$(awk -F= '/^NAME/{print $2}' /etc/os-release | xargs)"
 OS="$(uname -s)"
 
 function uncaughtError {
@@ -35,7 +35,7 @@ function installCommonDeps() {
   echo -e "📦  Installing common dependencies..."
   deps="gimp inkscape"
   case "${PLATFORM}" in
-      Ubuntu*)
+      Ubuntu* | Debian*)
           sudo apt-get install -y $deps build-essential synaptic gparted pdfsam &> ${ERROR_LOG}
           ;;
       Fedora*)
@@ -63,7 +63,7 @@ function installNode() {
   if ! [ -x "$(command -v node)" ]; then
     NODE_VERSION=16
     case "${PLATFORM}" in
-      Ubuntu*)
+      Ubuntu* | Debian*)
           curl -sL "https://deb.nodesource.com/setup_${NODE_VERSION}.x" | sudo bash - &> ${ERROR_LOG}
           sudo apt-get install -y nodejs &> ${ERROR_LOG}
           ;;
@@ -92,7 +92,7 @@ function installZSH() {
 
   echo -e "📦  Installing ZSH..."
   case "${PLATFORM}" in
-    Ubuntu*)
+    Ubuntu* | Debian*)
         sudo apt-get install -y zsh &> ${ERROR_LOG}
         ;;
     Fedora*)
@@ -118,12 +118,12 @@ function setupZSHRC() {
     rm "${ZSH_FILE}" &> ${ERROR_LOG}
   fi
 
+  echo -e "source ${DOTFILES_DIR}/zsh/zshrc" > "${ZSH_FILE}"
+
   git clone https://github.com/dracula/zsh.git "${HOME}/.custom-zsh/themes/dracula" &> ${ERROR_LOG}
   ln -s ${HOME}/.custom-zsh/themes/dracula/dracula.zsh-theme ${HOME}/.custom-zsh/themes/dracula.zsh-theme &> ${ERROR_LOG}
 
   dconf load /org/gnome/terminal/legacy/profiles:/ < "${DOTFILES_DIR}/gnome-terminal/profiles.dconf"
-
-  echo -e "source ${DOTFILES_DIR}/zsh/zshrc" > "${ZSH_FILE}"
   echo -e "\n\t✅  Done\n"
 }
 
@@ -166,7 +166,7 @@ function installVSCode() {
 
   echo -e "📝  Installing VSCode..."
   case "${PLATFORM}" in
-      Ubuntu*)
+      Ubuntu* | Debian*)
           curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
           sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
           rm microsoft.gpg
@@ -204,7 +204,7 @@ function installEmojiFont() {
 
   echo -e "📝  Installing Emoji..."
   case "${PLATFORM}" in
-      Ubuntu*)
+      Ubuntu* | Debian*)
           sudo apt-get install -y fonts-noto-color-emoji &> ${ERROR_LOG}
           ;;
       Fedora*)
