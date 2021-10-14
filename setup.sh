@@ -36,10 +36,10 @@ function installCommonDeps() {
   deps="gimp inkscape"
   case "${PLATFORM}" in
       Ubuntu* | Debian*)
-          sudo apt-get install -y $deps build-essential synaptic gparted pdfsam &> ${ERROR_LOG}
+          sudo apt-get install -y $deps build-essential synaptic gparted pdfsam xdg-utils &> ${ERROR_LOG}
           ;;
       Fedora*)
-          sudo dnf install -y $deps pdfshuffler gcc-c++ transmission &> ${ERROR_LOG}
+          sudo dnf install -y $deps pdfshuffler gcc-c++ transmission xdg-utils &> ${ERROR_LOG}
           ;;
       *)
           # NOOP
