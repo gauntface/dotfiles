@@ -13,7 +13,7 @@ export PATH=$PATH:/usr/local/go/bin
 export GOPATH="${HOME}/Projects/go"
 export PATH=$PATH:${GOPATH}/bin
 
-PLATFORM="$(awk -F= '/^NAME/{print $2}' /etc/os-release)"
+PLATFORM="$(awk -F= '/^NAME/{print $2}' /etc/os-release | xargs)"
 case "${PLATFORM}" in
     Ubuntu*)
         source "${TERMINAL_DIR}/source-ubuntu"
