@@ -31,6 +31,23 @@ function initDirectories() {
   echo -e ""
 }
 
+function performUpdate() {
+  echo -e "📦  Update system..."
+  case "${PLATFORM}" in
+      Ubuntu* | Debian*)
+          sudo apt-get update -y
+          ;;
+      Fedora*)
+          sudo dnf update -y
+          ;;
+      *)
+          # NOOP
+          echo -e "\t🤷 Unknown platform '${PLATFORM}'"
+          ;;
+  esac
+  echo -e "\n\t✅  Done\n"
+}
+
 function installCommonDeps() {
   echo -e "📦  Installing common dependencies..."
   deps="gimp inkscape"
@@ -295,6 +312,8 @@ function getCorpCommand() {
 echo -e "\n📓  Installing @gauntface's Dotfiles\n"
 
 initDirectories
+
+performUpdate
 
 installCommonDeps
 
