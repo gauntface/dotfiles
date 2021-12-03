@@ -13,6 +13,10 @@ export PATH=$PATH:/usr/local/go/bin
 export GOPATH="${HOME}/Projects/go"
 export PATH=$PATH:${GOPATH}/bin
 
+# Add Ruby to path
+export GEM_HOME="$HOME/Projects/ruby/gems"
+export PATH="$HOME/Projects/ruby/bin:$PATH"
+
 PLATFORM="$(awk -F= '/^NAME/{print $2}' /etc/os-release | xargs)"
 case "${PLATFORM}" in
     Ubuntu*)
