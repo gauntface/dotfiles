@@ -16,14 +16,15 @@ function uncaughtError {
 function initTempDir() {
     TEMP_DIR="$(mktemp -d)"
     ERROR_LOG="${TEMP_DIR}/dotfile-install-err.log"
+    touch $ERROR_LOG
     GO_DIR="/usr/local/go/"
 }
 
 function downloadGo() {
     echo -e "\t📂  Downloading go..."
-    latestVersion="$(curl -s https://golang.org/VERSION?m=text)"
+    latestVersion="$(curl -s https://go.dev/VERSION?m=text)"
     GO_TAR="${latestVersion}.linux-amd64.tar.gz"
-    
+
     if [ -f "${GO_TAR}" ]
     then
         rm "${GO_TAR}" # Remove file if it already exists
