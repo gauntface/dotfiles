@@ -85,7 +85,7 @@ function installNode() {
           sudo apt-get install -y nodejs &> ${ERROR_LOG}
           ;;
       Fedora*)
-          sudo dnf module install -y nodejs:${NODE_VERSION}/default &> ${ERROR_LOG}
+          sudo dnf module install -y nodejs:${NODE_VERSION} &> ${ERROR_LOG}
           ;;
       *)
           # NOOP
