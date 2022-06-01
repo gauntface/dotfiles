@@ -69,7 +69,7 @@ function installCommonDeps() {
 function setupGit() {
   echo -e "🖥️  Setting up Git..."
   git config --global core.excludesfile "${DOTFILES_DIR}/git/global-ignore"
-  git config --global user.email "mattgaunt@google.com"
+  git config --global user.email "matt@gaunt.dev"
   git config --global user.name "Matt Gaunt"
   echo -e "\n\t✅  Done\n"
 }
