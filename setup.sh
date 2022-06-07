@@ -269,6 +269,23 @@ function setupPrivateDotfiles() {
   echo -e "\n\t✅  Done\n"
 }
 
+function powerForFramework() {
+  echo ""
+  echo -e "️️⚡  Improve power for the Framework..."
+  echo -e "\nWould you like to use the 'nvme.noacpi=1' kernel flag? (Please enter a number)"
+  select yn in "Yes" "No (Skip)"; do
+      case $yn in
+          Yes )
+              echo ""
+              sudo grubby --update-kernel=ALL --args="nvme.noacpi=1"
+              break;;
+          "No (Skip)" )
+              break;;
+      esac
+  done
+  echo -e "\n\t✅  Done\n"
+}
+
 function setupCorpSpecific() {
   if [[ "${IS_CORP_INSTALL}" = false ]]; then
     return
@@ -337,6 +354,8 @@ installVSCode
 installEmojiFont
 
 installGauntfacePlymouth
+
+powerForFramework
 
 setupPrivateDotfiles
 
