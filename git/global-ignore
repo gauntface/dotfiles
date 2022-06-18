@@ -18,3 +18,7 @@ dist/
 *.lock
 profile
 .Spotlight-V100
+
+# VSCode can include logs that include environment variables
+# which can be tokens
+.vscode/
