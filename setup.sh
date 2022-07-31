@@ -56,7 +56,15 @@ function installCommonDeps() {
           sudo apt-get install -y $deps build-essential synaptic gparted pdfsam xdg-utils gnome-tweaks &> ${ERROR_LOG}
           ;;
       Fedora*)
-          sudo dnf install -y $deps pdfshuffler gcc-c++ transmission xdg-utils gnome-tweaks &> ${ERROR_LOG}
+          sudo dnf install -y \
+            $deps \
+            pdfshuffler \
+            gcc-c++ \
+            transmission \
+            xdg-utils \
+            gnome-tweaks \
+            webp-pixbuf-loader \
+            avif-pixbuf-loader
           ;;
       *)
           # NOOP
