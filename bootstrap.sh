@@ -3,8 +3,8 @@
 # Catch and log errors
 trap uncaughtError ERR
 
-PLATFORM="$(awk -F= '/^NAME/{print $2}' /etc/os-release | xargs)"
 OS="$(uname -s)"
+PLATFORM="$(awk -F= '/^NAME/{print $2}' /etc/os-release | xargs)"
 
 function uncaughtError {
   echo -e "\n\t❌  Error\n"
@@ -56,27 +56,41 @@ function installChrome() {
 
   echo -e "🌎  Installing Chrome..."
   chrome_version="google-chrome-stable"
-  case "${PLATFORM}" in
-      Ubuntu* | Debian*)
-          if [ ! -f /etc/apt/sources.list.d/google-chrome.list ]; then
-            wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - &> ${ERROR_LOG}
+  case "${OS}" in
+    Linux*)
+        case "${PLATFORM}" in
+            Ubuntu* | Debian*)
+                if [ ! -f /etc/apt/sources.list.d/google-chrome.list ]; then
+                    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - &> ${ERROR_LOG}
 
-	    sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list' &> ${ERROR_LOG}
-	  fi
-          sudo apt-get update &> ${ERROR_LOG}
-          sudo apt-get install -y $chrome_version &> ${ERROR_LOG}
-          ;;
-      Fedora*)
-          sudo dnf install fedora-workstation-repositories &> ${ERROR_LOG}
-          sudo dnf config-manager --set-enabled google-chrome &> ${ERROR_LOG}
-          sudo dnf install -y $chrome_version &> ${ERROR_LOG}
-          ;;
-      *)
-            echo "Running on unknown platform: ${PLATFORM}" > "$ERROR_LOG"
-            uncaughtError
-            exit 1
-            ;;
-  esac
+                    sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list' &> ${ERROR_LOG}
+                fi
+                sudo apt-get update &> ${ERROR_LOG}
+                sudo apt-get install -y $chrome_version &> ${ERROR_LOG}
+                ;;
+            Fedora*)
+                sudo dnf install fedora-workstation-repositories &> ${ERROR_LOG}
+                sudo dnf config-manager --set-enabled google-chrome &> ${ERROR_LOG}
+                sudo dnf install -y $chrome_version &> ${ERROR_LOG}
+                ;;
+            *)
+                echo "Running on unknown platform: ${PLATFORM}" > "$ERROR_LOG"
+                uncaughtError
+                exit 1
+                ;;
+        esac
+        ;;
+    Darwin*)
+        wget https://dl.google.com/chrome/mac/stable/GGRO/googlechrome.dmg
+        open ~/Downloads/googlechrome.dmg
+        sudo cp -r /Volumes/Google\ Chrome/Google\ Chrome.app /Applications/
+        ;;
+    *)
+        echo "Running on unknown OS: ${OS}" > "$ERROR_LOG"
+        uncaughtError
+        exit 1
+        ;;
+    esac
 
   # Try and open chrome since it may have been install in the previous step but do not error if it fails
   (google-chrome gauntface.com || true) &> /dev/null &
@@ -90,19 +104,23 @@ function installChrome() {
 function installGit() {
     echo -e "📦  Installing git + deps..."
 
-    deps="git xclip"
-    case "${PLATFORM}" in
-        Ubuntu* | Debian*)
-            sudo apt-get install -y $deps &> ${ERROR_LOG}
-            ;;
-        Fedora*)
-            sudo dnf install -y $deps &> ${ERROR_LOG}
-            ;;
-        *)
-            echo "Running on unknown platform: ${PLATFORM}" > "$ERROR_LOG"
-            uncaughtError
-            exit 1
-            ;;
+    case "${OS}" in
+        Linux*)
+            deps="git xclip"
+            case "${PLATFORM}" in
+                Ubuntu* | Debian*)
+                    sudo apt-get install -y $deps &> ${ERROR_LOG}
+                    ;;
+                Fedora*)
+                    sudo dnf install -y $deps &> ${ERROR_LOG}
+                    ;;
+                *)
+                    echo "Running on unknown platform: ${PLATFORM}" > "$ERROR_LOG"
+                    uncaughtError
+                    exit 1
+                    ;;
+            esac
+        ;;
     esac
     echo -e "\n\t✅  Done\n"
 }
@@ -174,7 +192,7 @@ function runSetup() {
 
 # -e means 'enable interpretation of backslash escapes'
 echo -e "\n👢  Bootstrapping @gauntface's Dotfiles"
-echo -e "👟 Running on ${PLATFORM}\n"
+echo -e "👟 Running on ${OS} - ${PLATFORM}\n"
 
 isCorpInstall
 
