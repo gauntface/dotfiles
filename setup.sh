@@ -3,8 +3,12 @@
 # Catch and log errors
 trap uncaughtError ERR
 
-PLATFORM="$(awk -F= '/^NAME/{print $2}' /etc/os-release | xargs)"
 OS="$(uname -s)"
+case "${OS}" in
+	Linux*)
+		OS="${OS} - $(awk -F= '/^NAME/{print $2}' /etc/os-release | xargs)"
+		;;
+esac
 
 function uncaughtError {
   echo -e "\n\t❌  Error\n"
@@ -34,16 +38,16 @@ function initDirectories() {
 function performUpdate() {
   echo -e "📦  Update system..."
 
-  case "${PLATFORM}" in
-      Ubuntu* | Debian*)
+  case "${OS}" in
+      "Linux - Ubuntu"* | "Linux - Debian"*)
           sudo apt-get update -y
           ;;
-      Fedora*)
+      "Linux - Fedora"*)
           sudo dnf update -y
           ;;
       *)
           # NOOP
-          echo -e "\t🤷 Unknown platform '${PLATFORM}'"
+          echo -e "\t🤷 Unknown platform '${OS}'"
           ;;
   esac
   echo -e "\n\t✅  Done\n"
@@ -52,11 +56,11 @@ function performUpdate() {
 function installCommonDeps() {
   echo -e "📦  Installing common dependencies..."
   deps="gimp inkscape"
-  case "${PLATFORM}" in
-      Ubuntu* | Debian*)
+  case "${OS}" in
+      "Linux - Ubuntu"* | "Linux - Debian"*)
           sudo apt-get install -y $deps build-essential synaptic gparted pdfsam xdg-utils gnome-tweaks &> ${ERROR_LOG}
           ;;
-      Fedora*)
+      "Linux - Fedora"*)
           sudo dnf install -y \
             $deps \
             pdfshuffler \
@@ -69,7 +73,7 @@ function installCommonDeps() {
           ;;
       *)
           # NOOP
-          echo -e "\t🤷 Unknown platform '${PLATFORM}'"
+          echo -e "\t🤷 Unknown OS '${OS}'"
           ;;
   esac
   echo -e "\n\t✅  Done\n"
@@ -88,17 +92,17 @@ function installNode() {
   echo -e "📦  Installing Node.js..."
   if ! [ -x "$(command -v node)" ]; then
     NODE_VERSION=16
-    case "${PLATFORM}" in
-      Ubuntu* | Debian*)
+    case "${OS}" in
+      "Linux - Ubuntu"* | "Linux - Debian"*)
           curl -sL "https://deb.nodesource.com/setup_${NODE_VERSION}.x" | sudo bash - &> ${ERROR_LOG}
           sudo apt-get install -y nodejs &> ${ERROR_LOG}
           ;;
-      Fedora*)
+      "Linux - Fedora"*)
           sudo dnf module install -y nodejs:${NODE_VERSION} &> ${ERROR_LOG}
           ;;
       *)
           # NOOP
-          echo -e "\t🤷 Unknown platform '${PLATFORM}'"
+          echo -e "\t🤷 Unknown os '${OS}'"
           ;;
     esac
   fi
@@ -117,17 +121,17 @@ function installZSH() {
   fi
 
   echo -e "📦  Installing ZSH..."
-  case "${PLATFORM}" in
-    Ubuntu* | Debian*)
+  case "${OS}" in
+    "Linux - Ubuntu"* | "Linux - Debian"*)
         sudo apt-get install -y zsh &> ${ERROR_LOG}
         ;;
-    Fedora*)
+    "Linux - Fedora"*)
         # util-linux-user provide chsh
         sudo dnf install -y zsh util-linux-user &> ${ERROR_LOG}
         ;;
     *)
         # NOOP
-        echo -e "\t🤷 Unknown platform '${PLATFORM}'"
+        echo -e "\t🤷 Unknown platform '${OS}'"
         ;;
   esac
 
@@ -192,21 +196,19 @@ function installVSCode() {
 
   echo -e "📝  Installing VSCode..."
   case "${OS}" in
-      Linux*)
-          case "${PLATFORM}" in
-              Ubuntu* | Debian*)
-                  curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
-                  sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
-                  rm microsoft.gpg
-                  if [ ! -f /etc/apt/sources.list.d/vscode.list ]; then
-                    sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list' &> ${ERROR_LOG}
-                  fi
-                  sudo apt-get update &> ${ERROR_LOG}
-                  sudo apt-get install -y code &> ${ERROR_LOG}
-                  ;;
-              Fedora*)
-                  sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-                  cat <<EOF | sudo tee /etc/yum.repos.d/vscode.repo > /dev/null
+		"Linux - Ubuntu"* | "Linux - Debian"*)
+			curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+			sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
+			rm microsoft.gpg
+			if [ ! -f /etc/apt/sources.list.d/vscode.list ]; then
+				sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list' &> ${ERROR_LOG}
+			fi
+			sudo apt-get update &> ${ERROR_LOG}
+			sudo apt-get install -y code &> ${ERROR_LOG}
+			;;
+    "Linux - Fedora"*)
+			sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+			cat <<EOF | sudo tee /etc/yum.repos.d/vscode.repo > /dev/null
 [code]
 name=Visual Studio Code
 baseurl=https://packages.microsoft.com/yumrepos/vscode
@@ -214,22 +216,17 @@ enabled=1
 gpgcheck=1
 gpgkey=https://packages.microsoft.com/keys/microsoft.asc
 EOF
-                  sudo dnf check-update  &> ${ERROR_LOG}
-                  sudo dnf install -y code  &> ${ERROR_LOG}
-                  ;;
-              *)
-                  # NOOP
-                  echo -e "\t🤷 Unknown platform '${PLATFORM}'"
-                  ;;
-          esac
-      Darwin*)
-          # NOOP
-          ;;
-      *)
-          # NOOP
-          echo -e "\t🤷 Unknown operating system '${OS}'"
-          ;;
-  esac
+			sudo dnf check-update  &> ${ERROR_LOG}
+			sudo dnf install -y code  &> ${ERROR_LOG}
+      ;;
+		Darwin*)
+			# NOOP
+			;;
+		*)
+    	# NOOP
+      echo -e "\t🤷 Unknown OS '${OS}'"
+      ;;
+    esac
   echo -e "\n\t✅  Done\n"
 }
 
@@ -240,26 +237,19 @@ function installEmojiFont() {
 
   echo -e "📝  Installing Emoji..."
   case "${OS}" in
-      Linux*)
-        case "${PLATFORM}" in
-          Ubuntu* | Debian*)
-              sudo apt-get install -y fonts-noto-color-emoji &> ${ERROR_LOG}
-              ;;
-          Fedora*)
-              # NOOP
-              ;;
-          *)
-              # NOOP
-              echo -e "\t🤷 Unknown platform '${PLATFORM}'"
-              ;;
-        esac
-      Darwin*)
-          # NOOP
-          ;;
-      *)
-          # NOOP
-          echo -e "\t🤷 Unknown operating system '${OS}'"
-          ;;
+    "Linux - Ubuntu"* | "Linux - Debian"*)
+			sudo apt-get install -y fonts-noto-color-emoji &> ${ERROR_LOG}
+			;;
+		"Linux - Fedora"*)
+    	# NOOP
+      ;;
+    Darwin*)
+    	# NOOP
+      ;;
+		*)
+    	# NOOP
+      echo -e "\t🤷 Unknown operating system '${OS}'"
+      ;;
   esac
   echo -e "\n\t✅  Done\n"
 }
