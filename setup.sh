@@ -17,6 +17,24 @@ function uncaughtError {
   exit $?
 }
 
+function isCorpInstall() {
+  if [[ -z "${DEPLOY_ENV}" ]]; then
+    echo "💼  Is this a corp install? (Please enter a number)"
+    select yn in "Yes" "No"; do
+        case $yn in
+            Yes )
+                IS_CORP_INSTALL=true
+                break;;
+            No )
+                IS_CORP_INSTALL=false
+                break;;
+        esac
+    done
+    echo ""
+  fi
+
+}
+
 function initDirectories() {
   PROJECTS_DIR="${HOME}/Projects"
   TOOLS_DIR="${HOME}/Projects/Tools"
@@ -80,10 +98,17 @@ function installCommonDeps() {
 }
 
 function setupGit() {
+  if [[ "${IS_CORP_INSTALL}" = true ]]; then
+    return
+  fi
+
   echo -e "🖥️  Setting up Git..."
   git config --global core.excludesfile "${DOTFILES_DIR}/git/global-ignore"
-  git config --global user.email "matt@gaunt.dev"
-  git config --global user.name "Matt Gaunt"
+  git config --global user.name "Matt Gaunt-Seo"
+
+  if [[ "${IS_CORP_INSTALL}" = false ]]; then
+    git config --global user.email "matt@gaunt.dev"
+  fi
   echo -e "\n\t✅  Done\n"
 }
 
@@ -106,15 +131,6 @@ function installNode() {
           ;;
     esac
   fi
-  echo -e "\n\t✅  Done\n"
-}
-
-function setupNPM() {
-  echo -e "️️🖥️  Setting up NPM..."
-  # mkdir "${HOME}/.npm-packages"
-  # npm config set prefix "${HOME}/.npm-packages"
-
-  # curl -sL https://raw.githubusercontent.com/glenpike/npm-g_nosudo/master/npm-g-nosudo.sh | sh - &> ${ERROR_LOG}
   echo -e "\n\t✅  Done\n"
 }
 
@@ -347,6 +363,8 @@ function getCorpCommand() {
 # -e means 'enable interpretation of backslash escapes'
 echo -e "\n📓  Installing @gauntface's Dotfiles\n"
 
+isCorpInstall
+
 initDirectories
 
 performUpdate
@@ -362,9 +380,6 @@ installZSH
 setupZSHRC
 
 switchToZSH
-
-# Setup NPM *after* ZSH to ensure it's configured for ZSH correctly
-setupNPM
 
 installGo
 
