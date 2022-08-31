@@ -63,6 +63,9 @@ function performUpdate() {
       "Linux - Fedora"*)
           sudo dnf update -y
           ;;
+      Darwin*)
+          # NOOP
+          ;;
       *)
           # NOOP
           echo -e "\t🤷 Unknown platform '${OS}'"
@@ -89,6 +92,9 @@ function installCommonDeps() {
             webp-pixbuf-loader \
             avif-pixbuf-loader
           ;;
+      Darwin*)
+          # NOOP
+          ;;
       *)
           # NOOP
           echo -e "\t🤷 Unknown OS '${OS}'"
@@ -98,16 +104,29 @@ function installCommonDeps() {
 }
 
 function setupGit() {
-  if [[ "${IS_CORP_INSTALL}" = true ]]; then
-    return
-  fi
-
   echo -e "🖥️  Setting up Git..."
   git config --global core.excludesfile "${DOTFILES_DIR}/git/global-ignore"
   git config --global user.name "Matt Gaunt-Seo"
 
   if [[ "${IS_CORP_INSTALL}" = false ]]; then
     git config --global user.email "matt@gaunt.dev"
+  else
+    read -p "Please enter your corp email: " CORP_EMAIL
+    echo -e "\nDoes this look right? (Please enter a number)"
+    echo -e "\n\t${CORP_EMAIL}\n"
+    select yn in "Yes" "No (Retry)" "No (Skip)"; do
+        case $yn in
+            Yes )
+                echo ""
+                git config --global user.email "${CORP_EMAIL}"
+                break;;
+            "No (Retry)" )
+                setupGit
+                break;;
+            "No (Skip)" )
+                break;;
+        esac
+    done
   fi
   echo -e "\n\t✅  Done\n"
 }
@@ -148,6 +167,9 @@ function installZSH() {
         # util-linux-user provide chsh
         sudo dnf install -y zsh util-linux-user &> ${ERROR_LOG}
         ;;
+    Darwin*)
+        sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+        ;;
     *)
         # NOOP
         echo -e "\t🤷 Unknown platform '${OS}'"
@@ -172,7 +194,18 @@ function setupZSHRC() {
   git clone https://github.com/dracula/zsh.git "${HOME}/.custom-zsh/themes/dracula" &> ${ERROR_LOG}
   ln -s ${HOME}/.custom-zsh/themes/dracula/dracula.zsh-theme ${HOME}/.custom-zsh/themes/dracula.zsh-theme &> ${ERROR_LOG}
 
-  dconf load /org/gnome/terminal/legacy/profiles:/ < "${DOTFILES_DIR}/gnome-terminal/profiles.dconf"
+  case "${OS}" in
+    "Linux - Ubuntu"* | "Linux - Debian"*)
+        dconf load /org/gnome/terminal/legacy/profiles:/ < "${DOTFILES_DIR}/gnome-terminal/profiles.dconf"
+        ;;
+    "Linux - Fedora"*)
+        # util-linux-user provide chsh
+        dconf load /org/gnome/terminal/legacy/profiles:/ < "${DOTFILES_DIR}/gnome-terminal/profiles.dconf"
+        ;;
+    *)
+        # NOOP
+        ;;
+  esac
   echo -e "\n\t✅  Done\n"
 }
 
@@ -305,6 +338,10 @@ function setupPrivateDotfiles() {
 }
 
 function powerForFramework() {
+  if [[ "${IS_CORP_INSTALL}" = true ]]; then
+    return
+  fi
+
   echo ""
   echo -e "️️⚡  Improve power for the Framework..."
   echo -e "\nWould you like to use the 'nvme.noacpi=1' kernel flag? (Please enter a number)"
