@@ -17,12 +17,17 @@ export PATH=$PATH:${GOPATH}/bin
 export GEM_HOME="$HOME/Projects/ruby/gems"
 export PATH="$HOME/Projects/ruby/bin:$PATH"
 
-PLATFORM="$(awk -F= '/^NAME/{print $2}' /etc/os-release | xargs)"
-case "${PLATFORM}" in
-    Ubuntu*)
+OS="$(uname -s)"
+case "${OS}" in
+	Linux*)
+		OS="${OS} - $(awk -F= '/^NAME/{print $2}' /etc/os-release | xargs)"
+		;;
+esac
+case "${OS}" in
+    "Linux - Ubuntu"*)
         source "${TERMINAL_DIR}/source-ubuntu"
         ;;
-    Fedora*)
+    "Linux - Fedora"*)
     	source "${TERMINAL_DIR}/source-fedora"
         ;;
     Darwin*)
