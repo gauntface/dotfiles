@@ -111,7 +111,10 @@ function installNode() {
 
 function setupNPM() {
   echo -e "️️🖥️  Setting up NPM..."
-  curl -sL https://raw.githubusercontent.com/glenpike/npm-g_nosudo/master/npm-g-nosudo.sh | sh - &> ${ERROR_LOG}
+  # mkdir "${HOME}/.npm-packages"
+  # npm config set prefix "${HOME}/.npm-packages"
+
+  # curl -sL https://raw.githubusercontent.com/glenpike/npm-g_nosudo/master/npm-g-nosudo.sh | sh - &> ${ERROR_LOG}
   echo -e "\n\t✅  Done\n"
 }
 

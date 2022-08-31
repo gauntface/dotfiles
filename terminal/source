@@ -5,6 +5,7 @@ source "${TERMINAL_DIR}/aliases"
 
 # Add NPM-Packages directory
 export NPM_PACKAGES="${HOME}/.npm-packages"
+export NPM_CONFIG_PREFIX="$NPM_PACKAGES"
 export NODE_PATH="$NPM_PACKAGES/lib/node_modules${NODE_PATH:+:$NODE_PATH}"
 export PATH="$NPM_PACKAGES/bin:$PATH"
 
@@ -31,7 +32,7 @@ case "${OS}" in
     	source "${TERMINAL_DIR}/source-fedora"
         ;;
     Darwin*)
-        # NOOP
+        source "${TERMINAL_DIR}/source-darwin"
         ;;
     *)
         # NOOP
