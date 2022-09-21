@@ -105,6 +105,7 @@ function installCommonDeps() {
 
 function setupGit() {
   echo -e "🖥️  Setting up Git..."
+  echo "${DOTFILES_DIR}/git/global-ignore"
   git config --global core.excludesfile "${DOTFILES_DIR}/git/global-ignore"
   git config --global user.name "Matt Gaunt-Seo"
   git config --global pull.rebase true
