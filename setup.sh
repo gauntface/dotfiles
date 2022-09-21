@@ -108,6 +108,7 @@ function setupGit() {
   git config --global core.excludesfile "${DOTFILES_DIR}/git/global-ignore"
   git config --global user.name "Matt Gaunt-Seo"
   git config --global pull.rebase true
+  git config --global push.autoSetupRemote true
 
   if [[ "${IS_CORP_INSTALL}" = false ]]; then
     git config --global user.email "matt@gaunt.dev"
