@@ -24,4 +24,4 @@ alias gu="git fetch origin && git pull && git submodule update --init --recursiv
 alias gp="git add . && git commit -a && git push --recurse-submodules=on-demand"
 
 # Python
-alias mkvenv="python -m venv .venv && source .venv/bin/activate"
+alias mkvenv="python3 -m venv .venv && source .venv/bin/activate"
