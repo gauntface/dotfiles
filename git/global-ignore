@@ -23,5 +23,6 @@ profile
 # which can be tokens
 .vscode/
 
-# venv
+# Python
 .venv/
+__pycache__/
