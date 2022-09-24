@@ -23,5 +23,14 @@ alias gr="git fetch origin && git reset @{upstream} --hard --recurse-submodule"
 alias gu="git fetch origin && git pull && git submodule update --init --recursive --remote"
 alias gp="git add . && git commit -a && git push --recurse-submodules=on-demand"
 
+# Open the Pull Request URL for your current directory's branch (base branch defaults to main)
+function openpr() {
+  github_url=$(git remote -v | awk '/fetch/{print $2}' | sed -Ee 's#(git@|git://)#https://#' -e 's@com:@com/@' -e 's%\.git$%%' | awk '/github/');
+  branch_name=$(git symbolic-ref HEAD | cut -d"/" -f 3,4);
+  default_branch_name=$(git symbolic-ref refs/remotes/origin/HEAD | cut -d"/" -f 3,4);
+  pr_url="$github_url/compare/${default_branch_name}...$branch_name"
+  open "$pr_url";
+}
+
 # Python
 alias mkvenv="python3 -m venv .venv && source .venv/bin/activate"
