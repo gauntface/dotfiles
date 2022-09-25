@@ -361,6 +361,27 @@ function powerForFramework() {
   echo -e "\n\t✅  Done\n"
 }
 
+function setupArduinoDevices() {
+  if [[ "${IS_CORP_INSTALL}" = true ]]; then
+    return
+  fi
+
+  echo -e "📝  Setting up arduino/device hacking..."
+  case "${OS}" in
+      Linux*)
+          sudo usermod -a -G dialout $USER
+          sudo cp -R "$DOTFILES_DIR/udev/." "/etc/udev/rules.d/"
+          ;;
+      Darwin*)
+          # NOOP
+          ;;
+      *)
+          # NOOP
+          ;;
+  esac
+  echo -e "\n\t✅  Done\n"
+}
+
 function setupCorpSpecific() {
   if [[ "${IS_CORP_INSTALL}" = false ]]; then
     return
@@ -430,6 +451,8 @@ installEmojiFont
 installGauntfacePlymouth
 
 powerForFramework
+
+setupArduinoDevices
 
 setupPrivateDotfiles
 

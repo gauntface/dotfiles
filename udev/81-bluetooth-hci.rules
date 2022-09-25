@@ -1,0 +1,5 @@
+# This file contains a rule to disable the bluetooth chip
+# on my ncase M1 computer allowing the usb bluetooth adapter
+# to work
+
+SUBSYSTEM=="usb", ATTRS{idVendor}=="0b05", ATTRS{idProduct}=="185c", ATTR{authorized}="0"
