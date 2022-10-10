@@ -3,6 +3,12 @@ gen/
 build/
 dist/
 
+# Hugo
+public/
+
+# Node
+node_modules/
+
 # Language specific
 *.class
 
