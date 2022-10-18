@@ -4,7 +4,7 @@ TERMINAL_DIR="${HOME}/Projects/Tools/dotfiles/terminal"
 source "${TERMINAL_DIR}/aliases"
 
 # Dotfile bin
-export PATH="${TERMINAL_DIR}/bin/:$PATH"
+export PATH="${TERMINAL_DIR}/bin:$PATH"
 
 # Add NPM-Packages directory
 export NPM_PACKAGES="${HOME}/.npm-packages"
