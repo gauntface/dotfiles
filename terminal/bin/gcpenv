@@ -1,0 +1,28 @@
+#!/bin/zsh
+
+# This is from https://github.com/bukzor/dotfiles/blob/master/bin/gcpenv
+
+set -euo pipefail
+
+case $# in
+  0) exec gcloud config configurations list;;
+  1)
+    if ! gcloud config configurations activate "$@"; then
+      gcloud config configurations create "$@"
+      echo >&2 FIXME: need to set cluster and region
+      exit 1
+    fi
+  ;;
+  *) exec gcloud config configurations "$@";;
+esac
+
+eval "$(gcloud config list --format 'get(compute,container)')"
+
+if [[ -d $HOME/.kube && "$region" && "$cluster" ]]; then
+  flock $HOME/.kube/config \
+    gcloud container clusters get-credentials --region "$region" "$cluster"
+
+  if has kubectl; then
+    kubectl config current-context >&2
+  fi
+fi
