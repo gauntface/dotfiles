@@ -96,7 +96,7 @@ function installChrome() {
 
 function installGit() {
     echo -e "📦  Installing git + deps..."
-
+    deps="git xclip"
     case "${OS}" in
 			"Linux - Ubuntu"* | "Linux - Debian"*)
 				sudo apt-get install -y $deps &> ${ERROR_LOG}
