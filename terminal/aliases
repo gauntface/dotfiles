@@ -20,8 +20,8 @@ alias server='python3 -m http.server --bind 127.0.0.1'
 
 # Git
 alias gr="git fetch origin && git reset @{upstream} --hard --recurse-submodule"
-alias gu="git fetch origin && git pull && git submodule update --init --recursive --remote"
-alias gp="git add . && git commit -a && git push --recurse-submodules=on-demand"
+alias gu="git fetch origin && git pull && gsm"
+alias gsm="git submodule update --init --recursive --remote"
 
 # Open the Pull Request URL for your current directory's branch (base branch defaults to main)
 function openpr() {
