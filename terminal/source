@@ -21,6 +21,11 @@ export PATH=$PATH:${GOPATH}/bin
 export GEM_HOME="$HOME/Projects/ruby/gems"
 export PATH="$HOME/Projects/ruby/bin:$PATH"
 
+HUGO_DIR="$HOME/Projects/Tools/hugo"
+if [[ -d $HUGO_DIR ]]; then
+    export PATH="$HUGO_DIR:$PATH"
+fi
+
 OS="$(uname -s)"
 case "${OS}" in
 	Linux*)
