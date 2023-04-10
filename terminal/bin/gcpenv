@@ -22,7 +22,7 @@ if [[ -d $HOME/.kube && "$region" && "$cluster" ]]; then
   flock $HOME/.kube/config \
     gcloud container clusters get-credentials --region "$region" "$cluster"
 
-  if has kubectl; then
+  if command -v kubectl; then
     kubectl config current-context >&2
   fi
 fi
