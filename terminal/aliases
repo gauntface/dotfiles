@@ -34,6 +34,3 @@ function openpr() {
 
 # Python
 alias mkvenv="python3 -m venv .venv && source .venv/bin/activate"
-
-# Terraform
-alias tf="terraform"
