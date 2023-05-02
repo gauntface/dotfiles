@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -eo pipefail
+
 # Catch and log errors
 trap uncaughtError ERR
 

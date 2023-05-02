@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -eo pipefail
+
 # Catch and log errors
 trap uncaughtError ERR
 
@@ -153,7 +155,10 @@ function installNode() {
           ;;
     esac
   fi
-  echo -e "\n\t✅  Done\n"
+  global_dir="${HOME}/.npm-packages"
+  echo -e "\n\tMaking global directory '${global_dir}'\n"
+  mkdir -p "${global_dir}/lib"
+  echo -e "\t✅  Done\n"
 }
 
 function installZSH() {

@@ -9,7 +9,7 @@ export PATH="${TERMINAL_DIR}/bin:$PATH"
 # Add NPM-Packages directory
 export NPM_PACKAGES="${HOME}/.npm-packages"
 export NPM_CONFIG_PREFIX="$NPM_PACKAGES"
-export NODE_PATH="$NPM_PACKAGES/lib/node_modules${NODE_PATH:+:$NODE_PATH}"
+export NODE_PATH="$NPM_PACKAGES/lib/node_modules:${NODE_PATH}"
 export PATH="$NPM_PACKAGES/bin:$PATH"
 
 # Add go to path
