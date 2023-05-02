@@ -140,14 +140,15 @@ function installNode() {
   # Install Node and NPM - https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions
   echo -e "📦  Installing Node.js..."
   if ! [ -x "$(command -v node)" ]; then
-    NODE_VERSION=16
+    NODE_VERSION=18
     case "${OS}" in
       "Linux - Ubuntu"* | "Linux - Debian"*)
           curl -sL "https://deb.nodesource.com/setup_${NODE_VERSION}.x" | sudo bash - &> ${ERROR_LOG}
           sudo apt-get install -y nodejs &> ${ERROR_LOG}
           ;;
       "Linux - Fedora"*)
-          sudo dnf module install -y nodejs:${NODE_VERSION} &> ${ERROR_LOG}
+          curl -sL https://rpm.nodesource.com/setup_${NODE_VERSION}.x | sudo bash - &> ${ERROR_LOG}
+          sudo dnf install -y nodejs &> ${ERROR_LOG}
           ;;
       *)
           # NOOP
