@@ -1,8 +1,8 @@
-#!/bin/zsh
+#!/bin/bash
 
 # This is from https://github.com/bukzor/dotfiles/blob/master/bin/gcpenv
 
-set -euo pipefail
+set -euxo pipefail
 
 case $# in
   0) exec gcloud config configurations list;;
