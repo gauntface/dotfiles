@@ -9,7 +9,7 @@ hostname=$(hostname)
 if [[ $hostname == "T0D96LHX42.local" ]]; then
     DRACULA_ARROW_ICON="(╬ Ò ‸ Ó)"
 elif [[ $hostname == "microboss" ]]; then
-    DRACULA_ARROW_ICON="ᕦ⊙෴⊙ᕤ"
+    DRACULA_ARROW_ICON="ᕙ(˵ ಠ ਊ ಠ ˵)ᕗ"
 elif [[ $hostname == "gauntface" ]]; then
     DRACULA_ARROW_ICON="（っ＾▿＾）"
 else
