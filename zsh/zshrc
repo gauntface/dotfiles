@@ -7,7 +7,7 @@ export ZSH_CUSTOM=~/.custom-zsh
 ZSH_THEME="dracula"
 hostname=$(hostname)
 if [[ $hostname == "T0D96LHX42.local" ]]; then
-    DRACULA_ARROW_ICON="(╬ Ò ‸ Ó)"
+    DRACULA_ARROW_ICON="(╬ Ò﹏Ó)"
 elif [[ $hostname == "microboss" ]]; then
     DRACULA_ARROW_ICON="(つ▀¯▀)つ"
 elif [[ $hostname == "gauntface" ]]; then
