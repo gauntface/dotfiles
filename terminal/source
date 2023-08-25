@@ -1,3 +1,5 @@
+# shellcheck shell=bash
+
 TERMINAL_DIR="${HOME}/Projects/Tools/dotfiles/terminal"
 
 # Add alises

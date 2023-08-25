@@ -5,7 +5,16 @@ export ZSH_CUSTOM=~/.custom-zsh
 
 # Install theme
 ZSH_THEME="dracula"
-DRACULA_ARROW_ICON="（っ＾▿＾）"
+hostname=$(hostname)
+if [[ $hostname == "T0D96LHX42.local" ]]; then
+    DRACULA_ARROW_ICON="(╬ Ò ‸ Ó)"
+elif [[ $hostname == "microboss" ]]; then
+    DRACULA_ARROW_ICON="ᕦ⊙෴⊙ᕤ"
+elif [[ $hostname == "gauntface" ]]; then
+    DRACULA_ARROW_ICON="（っ＾▿＾）"
+else
+    DRACULA_ARROW_ICON="【・ヘ・?】"
+fi
 
 # Allow oh-my-zsh to automatically update
 DISABLE_UPDATE_PROMPT=true
