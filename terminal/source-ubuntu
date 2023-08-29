@@ -1,6 +1,8 @@
+#!/bin/bash
+
 # Make Nautilus open with same command as OS X
 open() {
-    xdg-open $1
+    xdg-open "$1" &
 }
 
 # Enable applications to run with sudo on Wayland.

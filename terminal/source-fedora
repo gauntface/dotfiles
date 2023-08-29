@@ -1,5 +1,7 @@
+#!/bin/bash
+
 # Make Nautilus open with same command as OS X
 open() {
-    xdg-open $1
+    xdg-open "$1" &
 }
 
