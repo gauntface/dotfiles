@@ -6,6 +6,7 @@ export ZSH_CUSTOM=~/.custom-zsh
 # Install theme
 ZSH_THEME="dracula"
 hostname=$(hostname)
+# (づ｡◕‿‿◕｡)づ TODO: Setup next role.
 if [[ $hostname == "T0D96LHX42.local" ]]; then
     DRACULA_ARROW_ICON="(╬ Ò﹏Ó)"
 elif [[ $hostname == "microboss" ]]; then
