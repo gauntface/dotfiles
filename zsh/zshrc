@@ -46,5 +46,8 @@ fi
 # Load dotfiles
 source "${HOME}/Projects/Tools/dotfiles/terminal/source"
 
+# Load direnv
+eval "$(direnv hook zsh)"
+
 # Load GNU Tools instead of mac versions
 PATH="/opt/homebrew/opt/findutils/libexec/gnubin:$PATH"

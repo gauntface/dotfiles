@@ -92,7 +92,8 @@ function installCommonDeps() {
             xdg-utils \
             gnome-tweaks \
             webp-pixbuf-loader \
-            avif-pixbuf-loader
+            avif-pixbuf-loader \
+            direnv
           ;;
       Darwin*)
           # NOOP
