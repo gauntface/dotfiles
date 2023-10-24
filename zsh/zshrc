@@ -11,7 +11,7 @@ if [[ $hostname == "T0D96LHX42.local" ]]; then
     DRACULA_ARROW_ICON="(╬ Ò﹏Ó)"
 elif [[ $hostname == "microboss" ]]; then
     DRACULA_ARROW_ICON="(つ▀¯▀)つ"
-elif [[ $hostname == "gauntface" ]] || [[ $hostname == "gauntface-framework" ]]; then
+elif [[ $hostname == "gauntface-m1" ]] || [[ $hostname == "gauntface-framework" ]]; then
     DRACULA_ARROW_ICON="（っ＾▿＾）"
 else
     DRACULA_ARROW_ICON="【・ヘ・?】"
