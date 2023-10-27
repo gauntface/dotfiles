@@ -136,8 +136,20 @@ function setupSSHKeys() {
 
   echo -e "📋  Your SSH key has been copied to your clipboard, please add it to https://github.com/settings/keys"
 
-  # Try and open chrome since it may have been install in the previous step but do not error if it fails
-  google-chrome github.com/settings/keys || true
+  case "${OS}" in
+        Linux*)
+            # Try and open chrome since it may have been install in the previous step but do not error if it fails
+            google-chrome "https://github.com/settings/keys" || true
+            ;;
+        Darwin*)
+            open "https://github.com/settings/keys" || true
+            ;;
+        *)
+            echo "Running on unknown OS: ${OS}" > "$ERROR_LOG"
+            uncaughtError
+            exit 1
+            ;;
+    esac
 
   read -p "Press enter to continue"
 
@@ -146,11 +158,7 @@ function setupSSHKeys() {
 
 function cloneDotfiles() {
     echo -e "🖥  Cloning dotfiles..."
-    if [[ "${IS_CORP_INSTALL}" = true ]]; then
-        git clone https://github.com/gauntface/dotfiles.git ${DOTFILES_DIR} &> ${ERROR_LOG}
-    else
-        git clone git@github.com:gauntface/dotfiles.git ${DOTFILES_DIR} &> ${ERROR_LOG}
-    fi
+    git clone git@github.com:gauntface/dotfiles.git ${DOTFILES_DIR} &> ${ERROR_LOG}
 
     (cd $DOTFILES_DIR; git fetch origin)
     (cd $DOTFILES_DIR; git reset origin/main --hard)
