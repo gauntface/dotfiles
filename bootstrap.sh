@@ -158,11 +158,7 @@ function setupSSHKeys() {
 
 function cloneDotfiles() {
     echo -e "🖥  Cloning dotfiles..."
-    if [[ "${IS_CORP_INSTALL}" = true ]]; then
-        git clone https://github.com/gauntface/dotfiles.git ${DOTFILES_DIR} &> ${ERROR_LOG}
-    else
-        git clone git@github.com:gauntface/dotfiles.git ${DOTFILES_DIR} &> ${ERROR_LOG}
-    fi
+    git clone git@github.com:gauntface/dotfiles.git ${DOTFILES_DIR} &> ${ERROR_LOG}
 
     (cd $DOTFILES_DIR; git fetch origin)
     (cd $DOTFILES_DIR; git reset origin/main --hard)
