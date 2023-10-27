@@ -114,26 +114,21 @@ function setupGit() {
   git config --global pull.rebase true
   git config --global push.autoSetupRemote true
 
-  if [[ "${IS_CORP_INSTALL}" = false ]]; then
-    git config --global user.email "matt@gaunt.dev"
-  else
-    read -p "Please enter your corp email: " CORP_EMAIL
-    echo -e "\nDoes this look right? (Please enter a number)"
-    echo -e "\n\t${CORP_EMAIL}\n"
-    select yn in "Yes" "No (Retry)" "No (Skip)"; do
-        case $yn in
-            Yes )
-                echo ""
-                git config --global user.email "${CORP_EMAIL}"
-                break;;
-            "No (Retry)" )
-                setupGit
-                break;;
-            "No (Skip)" )
-                break;;
-        esac
-    done
-  fi
+  read -p "📧  What email would you like to use for your Git commits? [matt@gaunt.dev] " GIT_EMAIL
+  GIT_EMAIL=${GIT_EMAIL:-"matt@gaunt.dev"}
+  echo -e "\nDoes this look right? (Please enter a number)"
+  echo -e "\n\t${GIT_EMAIL}\n"
+  select yn in "Yes" "No (Retry)"; do
+      case $yn in
+          Yes )
+              echo ""
+              git config --global user.email "${GIT_EMAIL}"
+              break;;
+          "No (Retry)" )
+              setupGit
+              break;;
+      esac
+  done
   echo -e "\n\t✅  Done\n"
 }
 
@@ -164,7 +159,8 @@ function installNode() {
 }
 
 function installZSH() {
-  if [[ "${SHELL}" = "/usr/bin/zsh" ]]; then
+  # Check if shell end with /bin/zash
+  if [[ "${SHELL}" == *"/bin/zsh" ]]; then
     return
   fi
 
@@ -194,13 +190,13 @@ function installZSH() {
 function setupZSHRC() {
   echo -e "🖥️  Setting up .zshrc..."
   ZSH_FILE="${HOME}/.zshrc"
-
   if [ -L "${ZSH_FILE}" ] || [ -f "${ZSH_FILE}" ] ; then
     rm "${ZSH_FILE}" &> ${ERROR_LOG}
   fi
 
   echo -e "source ${DOTFILES_DIR}/zsh/zshrc" > "${ZSH_FILE}"
 
+  rm -rf "${HOME}/.custom-zsh/themes"
   git clone https://github.com/dracula/zsh.git "${HOME}/.custom-zsh/themes/dracula" &> ${ERROR_LOG}
   ln -s ${HOME}/.custom-zsh/themes/dracula/dracula.zsh-theme ${HOME}/.custom-zsh/themes/dracula.zsh-theme &> ${ERROR_LOG}
 
@@ -220,13 +216,14 @@ function setupZSHRC() {
 }
 
 function switchToZSH() {
-  if [[ "${SHELL}" = "/usr/bin/zsh" ]]; then
+  # Check if shell end with /bin/zash
+  if [[ "${SHELL}" == *"/bin/zsh" ]]; then
     return
   fi
 
   echo -e "🚧  Switching to ZSH..."
   # Changing shell requires user input.
-  chsh -s $(which zsh)
+  chsh -s "$(which zsh)"
   echo -e "\n\t✅  Done\n"
 }
 

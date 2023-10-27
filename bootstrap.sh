@@ -136,8 +136,20 @@ function setupSSHKeys() {
 
   echo -e "📋  Your SSH key has been copied to your clipboard, please add it to https://github.com/settings/keys"
 
-  # Try and open chrome since it may have been install in the previous step but do not error if it fails
-  google-chrome github.com/settings/keys || true
+  case "${OS}" in
+        Linux*)
+            # Try and open chrome since it may have been install in the previous step but do not error if it fails
+            google-chrome "https://github.com/settings/keys" || true
+            ;;
+        Darwin*)
+            open "https://github.com/settings/keys" || true
+            ;;
+        *)
+            echo "Running on unknown OS: ${OS}" > "$ERROR_LOG"
+            uncaughtError
+            exit 1
+            ;;
+    esac
 
   read -p "Press enter to continue"
 
