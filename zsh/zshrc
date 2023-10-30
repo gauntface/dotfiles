@@ -51,5 +51,11 @@ then
     eval "$(direnv hook zsh)"
 fi
 
+GITHUB_KEY="${HOME}/.ssh/id_github"
+if [[ -f "$GITHUB_KEY" ]];
+then
+    ssh-add "$GITHUB_KEY"
+fi
+
 # Load GNU Tools instead of mac versions
 PATH="/opt/homebrew/opt/findutils/libexec/gnubin:$PATH"
