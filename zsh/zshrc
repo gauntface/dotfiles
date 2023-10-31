@@ -36,14 +36,14 @@ if [[ -r $PRIV_ZSHRC ]]; then
     source $PRIV_ZSHRC
 fi
 
+# Load dotfiles
+source "${HOME}/Projects/Tools/dotfiles/terminal/source"
+
 # Load corp dotfiles if they exist
 CORP_ZSHRC="${HOME}/Projects/Tools/corp-dotfiles/assets/corp.zshrc"
 if [[ -r $CORP_ZSHRC ]]; then
     source $CORP_ZSHRC
 fi
-
-# Load dotfiles
-source "${HOME}/Projects/Tools/dotfiles/terminal/source"
 
 # Load direnv
 if command -v direnv &> /dev/null
@@ -54,7 +54,11 @@ fi
 GITHUB_KEY="${HOME}/.ssh/id_github"
 if [[ -f "$GITHUB_KEY" ]];
 then
-    ssh-add "$GITHUB_KEY"
+    # Run `ssh-add` to add your key and identity for ForwardAgent to work.
+    if [[ -z $(ssh-add -L) ]]
+    then
+        ssh-add "$GITHUB_KEY"
+    fi
 fi
 
 # Load GNU Tools instead of mac versions
