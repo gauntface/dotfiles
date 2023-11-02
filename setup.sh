@@ -12,7 +12,7 @@ case "${OS}" in
 		;;
 esac
 
-function uncaughtError {
+function uncaughtError() {
   echo -e "\n\t❌  Error\n"
   echo "$(<${ERROR_LOG})"
   echo -e "\n\t😞  Sorry\n"

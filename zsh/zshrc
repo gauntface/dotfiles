@@ -55,7 +55,9 @@ GITHUB_KEY="${HOME}/.ssh/id_github"
 if [[ -f "$GITHUB_KEY" ]];
 then
     # Run `ssh-add` to add your key and identity for ForwardAgent to work.
-    if [[ -z $(ssh-add -L) ]]
+    _=$(ssh-add -L)
+    exit_code=$?
+    if (( $exit_code != 0 ));
     then
         ssh-add "$GITHUB_KEY"
     fi
