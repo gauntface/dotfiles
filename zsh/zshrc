@@ -6,7 +6,7 @@ export ZSH_CUSTOM=~/.custom-zsh
 # Install theme
 ZSH_THEME="dracula"
 hostname=$(hostname)
-if [[ $hostname == *".local" ]]; then
+if [[ $hostname == *".local" ]] || [[ $hostname == *".home" ]]; then
     DRACULA_ARROW_ICON="(づ｡◕‿‿◕｡)づ "
 elif [[ $hostname == "microboss" ]]; then
     DRACULA_ARROW_ICON="(つ▀¯▀)つ "
