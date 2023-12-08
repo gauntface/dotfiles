@@ -113,6 +113,7 @@ function setupGit() {
   git config --global user.name "Matt Gaunt-Seo"
   git config --global pull.rebase true
   git config --global push.autoSetupRemote true
+  git config --global fetch.prune true
 
   read -p "📧  What email would you like to use for your Git commits? [matt@gaunt.dev] " GIT_EMAIL
   GIT_EMAIL=${GIT_EMAIL:-"matt@gaunt.dev"}
