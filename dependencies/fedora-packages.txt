@@ -7,3 +7,4 @@ webp-pixbuf-loader
 avif-pixbuf-loader
 direnv
 util-linux-user
+vlc
