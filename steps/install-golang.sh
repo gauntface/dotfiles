@@ -1,24 +1,5 @@
 #!/bin/bash
-
-# Catch and log errors
-trap uncaughtError ERR
-
-function uncaughtError {
-  echo -e "\n\t❌  Error\n"
-  if [[ ! -z "${ERROR_LOG}" ]]; then
-    echo -e "\t$(<${ERROR_LOG})"
-  fi
-  echo -e "\n\t😞  Sorry\n"
-  exit $?
-}
-
-
-function initTempDir() {
-    TEMP_DIR="$(mktemp -d)"
-    ERROR_LOG="${TEMP_DIR}/dotfile-install-err.log"
-    touch $ERROR_LOG
-    GO_DIR="/usr/local/go/"
-}
+set -euo pipefail
 
 function downloadGo() {
     echo -e "\t📂  Downloading go..."
@@ -53,12 +34,14 @@ function deleteTar() {
     rm "${GO_TAR}"
 }
 
-initTempDir
+function installGolang() {
+    logTitle "📦  Installing Golang..."
 
-downloadGo
+    downloadGo
 
-deleteOldGo
+    deleteOldGo
 
-unpackGo
+    unpackGo
 
-deleteTar
+    deleteTar
+}

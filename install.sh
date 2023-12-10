@@ -11,6 +11,8 @@ source "./steps/install-chrome.sh"
 source "./steps/install-zsh.sh"
 source "./steps/gnome-terminal.sh"
 source "./steps/setup-github.sh"
+source "./steps/setup-dotfiles.sh"
+source "./steps/install-golang.sh"
 
 function initOSVar() {
   OS="$(uname -s)"
@@ -41,6 +43,7 @@ function setupDirectories() {
     TOOLS_DIR="${HOME}/Projects/Tools"
     CODE_DIR="${HOME}/Projects/Code"
     DOTFILES_DIR="${TOOLS_DIR}/dotfiles"
+    DATA_DIR="${DOTFILES_DIR}/data"
 
     logTitle "📂  Setting up directories..."
     echo "\tProjects:\t${PROJECTS_DIR}"
@@ -76,15 +79,18 @@ else
   logStepDone "Chrome already installed"
 fi
 
+# GitHub needs to be setup before we can clone the dotfiles
 if [[ ! $(git ls-remote "git@github.com:gauntface/dotfiles.git") ]]; then
   optionalStep "setup GitHub" setupGitHub
 else
   logStepDone "GitHub already setup"
 fi
-# TODO: We need to setup the dotfiles directory first.
 
+# Dotfiles are used to setup ZSH and Gnome Terminal
+setupDotfiles
 
 installZSH
 setupGnomeTerminal
+installGolang
 
 echo "🔚  All Done. Please reboot to complete.\n"

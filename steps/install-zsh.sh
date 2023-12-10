@@ -33,7 +33,7 @@ function setupZSHRC() {
     rm "${zshrc_file}"
   fi
 
-  printf "source  %s/zsh/zshrc\n" "$DOTFILES_DIR" > "${zshrc_file}"
+  printf "source  %s/zsh/zshrc\n" "$DATA_DIR" > "${zshrc_file}"
   logDone
 }
 
