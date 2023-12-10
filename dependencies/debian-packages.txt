@@ -1,0 +1,7 @@
+build-essential
+synaptic
+gparted
+pdfsam
+xdg-utils
+gnome-tweaks
+fonts-noto-color-emoji

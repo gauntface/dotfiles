@@ -1,0 +1,5 @@
+git
+xclip
+gimp
+inkscape
+zsh

@@ -32,75 +32,6 @@ function isCorpInstall() {
 
 }
 
-function initDirectories() {
-  PROJECTS_DIR="${HOME}/Projects"
-  TOOLS_DIR="${HOME}/Projects/Tools"
-  CODE_DIR="${HOME}/Projects/Code"
-  DOTFILES_DIR="${HOME}/Projects/Tools/dotfiles"
-  PRIV_DOTFILES_DIR="${HOME}/Projects/Tools/private-dotfiles"
-  TEMP_DIR="$(mktemp -d)"
-  ERROR_LOG="${TEMP_DIR}/dotfile-install-err.log"
-
-  echo -e "📂  Using directories..."
-  echo -e "\tProjects:\t${PROJECTS_DIR}"
-  echo -e "\tTools:\t\t${TOOLS_DIR}"
-  echo -e "\tCode:\t\t${CODE_DIR}"
-  echo -e "\tDotfiles:\t${DOTFILES_DIR}"
-  echo -e "\tTemp:\t\t${TEMP_DIR}"
-  echo -e ""
-}
-
-function performUpdate() {
-  echo -e "📦  Update system..."
-
-  case "${OS}" in
-      "Linux - Ubuntu"* | "Linux - Debian"*)
-          sudo apt-get update -y
-          ;;
-      "Linux - Fedora"*)
-          sudo dnf update -y
-          ;;
-      Darwin*)
-          # NOOP
-          ;;
-      *)
-          # NOOP
-          echo -e "\t🤷 Unknown platform '${OS}'"
-          ;;
-  esac
-  echo -e "\n\t✅  Done\n"
-}
-
-function installCommonDeps() {
-  echo -e "📦  Installing common dependencies..."
-  deps="gimp inkscape"
-  case "${OS}" in
-      "Linux - Ubuntu"* | "Linux - Debian"*)
-          sudo apt-get install -y $deps build-essential synaptic gparted pdfsam xdg-utils gnome-tweaks &> ${ERROR_LOG}
-          ;;
-      "Linux - Fedora"*)
-          sudo dnf install -y \
-            $deps \
-            pdfshuffler \
-            gcc-c++ \
-            transmission \
-            xdg-utils \
-            gnome-tweaks \
-            webp-pixbuf-loader \
-            avif-pixbuf-loader \
-            direnv
-          ;;
-      Darwin*)
-          # NOOP
-          ;;
-      *)
-          # NOOP
-          echo -e "\t🤷 Unknown OS '${OS}'"
-          ;;
-  esac
-  echo -e "\n\t✅  Done\n"
-}
-
 function setupGit() {
   echo -e "🖥️  Setting up Git..."
   echo "${DOTFILES_DIR}/git/global-ignore"
@@ -158,93 +89,7 @@ function installNode() {
   echo -e "\t✅  Done\n"
 }
 
-function installZSH() {
-  if [[ "${SHELL}" = "/usr/bin/zsh" ]]; then
-    return
-  fi
 
-  echo -e "📦  Installing ZSH..."
-  case "${OS}" in
-    "Linux - Ubuntu"* | "Linux - Debian"*)
-        sudo apt-get install -y zsh &> ${ERROR_LOG}
-        ;;
-    "Linux - Fedora"*)
-        # util-linux-user provide chsh
-        sudo dnf install -y zsh util-linux-user &> ${ERROR_LOG}
-        ;;
-    Darwin*)
-        sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-        ;;
-    *)
-        # NOOP
-        echo -e "\t🤷 Unknown platform '${OS}'"
-        ;;
-  esac
-
-  echo -e "📦  Installing oh-my-zsh..."
-  curl -sL "https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh" | zsh - &> ${ERROR_LOG}
-  echo -e "\n\t✅  Done\n"
-}
-
-function setupZSHRC() {
-  echo -e "🖥️  Setting up .zshrc..."
-  ZSH_FILE="${HOME}/.zshrc"
-
-  if [ -L "${ZSH_FILE}" ] || [ -f "${ZSH_FILE}" ] ; then
-    rm "${ZSH_FILE}" &> ${ERROR_LOG}
-  fi
-
-  echo -e "source ${DOTFILES_DIR}/zsh/zshrc" > "${ZSH_FILE}"
-
-  git clone https://github.com/dracula/zsh.git "${HOME}/.custom-zsh/themes/dracula" &> ${ERROR_LOG}
-  ln -s ${HOME}/.custom-zsh/themes/dracula/dracula.zsh-theme ${HOME}/.custom-zsh/themes/dracula.zsh-theme &> ${ERROR_LOG}
-
-  case "${OS}" in
-    "Linux - Ubuntu"* | "Linux - Debian"*)
-        dconf load /org/gnome/terminal/legacy/profiles:/ < "${DOTFILES_DIR}/gnome-terminal/profiles.dconf"
-        ;;
-    "Linux - Fedora"*)
-        # util-linux-user provide chsh
-        dconf load /org/gnome/terminal/legacy/profiles:/ < "${DOTFILES_DIR}/gnome-terminal/profiles.dconf"
-        ;;
-    *)
-        # NOOP
-        ;;
-  esac
-  echo -e "\n\t✅  Done\n"
-}
-
-function switchToZSH() {
-  if [[ "${SHELL}" = "/usr/bin/zsh" ]]; then
-    return
-  fi
-
-  echo -e "🚧  Switching to ZSH..."
-  # Changing shell requires user input.
-  chsh -s $(which zsh)
-  echo -e "\n\t✅  Done\n"
-}
-
-function installGauntfacePlymouth() {
-  if [[ "${IS_CORP_INSTALL}" = true ]]; then
-    return
-  fi
-
-  echo -e "📦  Installing Gauntface Plymouth Theme..."
-  case "${OS}" in
-      Linux*)
-          source "${DOTFILES_DIR}/plymouth/install.sh"
-          ;;
-      Darwin*)
-          # NOOP
-          ;;
-      *)
-          # NOOP
-          echo -e "\t🤷 Unknown operating system '${OS}'"
-          ;;
-  esac
-  echo -e "\n\t✅  Done\n"
-}
 
 function installVSCode() {
   if [[ "${IS_CORP_INSTALL}" = true ]]; then
@@ -284,30 +129,6 @@ EOF
       echo -e "\t🤷 Unknown OS '${OS}'"
       ;;
     esac
-  echo -e "\n\t✅  Done\n"
-}
-
-function installEmojiFont() {
-  if [[ "${IS_CORP_INSTALL}" = true ]]; then
-    return
-  fi
-
-  echo -e "📝  Installing Emoji..."
-  case "${OS}" in
-    "Linux - Ubuntu"* | "Linux - Debian"*)
-			sudo apt-get install -y fonts-noto-color-emoji &> ${ERROR_LOG}
-			;;
-		"Linux - Fedora"*)
-    	# NOOP
-      ;;
-    Darwin*)
-    	# NOOP
-      ;;
-		*)
-    	# NOOP
-      echo -e "\t🤷 Unknown operating system '${OS}'"
-      ;;
-  esac
   echo -e "\n\t✅  Done\n"
 }
 
@@ -447,8 +268,6 @@ switchToZSH
 installGo
 
 installVSCode
-
-installEmojiFont
 
 installGauntfacePlymouth
 

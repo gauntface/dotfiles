@@ -1,0 +1,9 @@
+pdfshuffler
+gcc-c++
+transmission
+xdg-utils
+gnome-tweaks
+webp-pixbuf-loader
+avif-pixbuf-loader
+direnv
+util-linux-user
