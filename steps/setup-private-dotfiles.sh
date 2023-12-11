@@ -27,7 +27,7 @@ function runPrivateDotfileSetup() {
   logTitle "️️🖥️  Setting up Private dotfiles..."
 
   # shellcheck disable=SC1091
-  source "${PRIV_DOTFILES_DIR}/setup.sh"
+  "${PRIV_DOTFILES_DIR}/setup.sh"
 
   logDone
 }
@@ -37,5 +37,5 @@ function setupPrivateDotfiles() {
 
   updateDotfiles
 
-  runPrivateDotfileSetup
+  # runPrivateDotfileSetup
 }
