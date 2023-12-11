@@ -1,8 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 
-
-
 function createGitHubKey() {
   logTitle "🔑  Creating GitHub key..."
   local expected_ssh_file=$1

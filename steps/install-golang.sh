@@ -35,13 +35,18 @@ function deleteTar() {
 }
 
 function installGolang() {
-    logTitle "📦  Installing Golang..."
+    case "${OS}" in
+        Linux*)
+            logTitle "📦  Installing Golang..."
+            downloadGo
 
-    downloadGo
+            deleteOldGo
 
-    deleteOldGo
+            unpackGo
 
-    unpackGo
-
-    deleteTar
+            deleteTar
+            ;;
+        *)
+            return;;
+  esac
 }

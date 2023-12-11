@@ -1,21 +1,9 @@
 #!/bin/bash
+set -euo pipefail
 
-# Catch and log errors
-trap uncaughtError ERR
-
-PROJECTS_DIR="${HOME}/Projects"
-TOOLS_DIR="${HOME}/Projects/Tools"
-CODE_DIR="${HOME}/Projects/Code"
-DOTFILES_DIR="${HOME}/Projects/Tools/dotfiles"
-
-function uncaughtError {
-  echo -e "\n\t❌  Error\n"
-  if [[ ! -z "${ERROR_LOG}" ]]; then
-    echo -e "\t$(<${ERROR_LOG})"
-  fi
-  echo -e "\n\t😞  Sorry\n"
-  exit $?
-}
+source "./libs/logging.sh"
+source "./libs/error-handling.sh"
+source "./libs/optional-step.sh"
 
 function checkUncommittedWork() {
     echo -e "🛠️  Check uncommitted work...\n"
@@ -38,9 +26,9 @@ function checkUncommittedWork() {
 
 function checkTerminalProfile() {
     echo -e "🛠️  Check gnome terminal profile is up-to-date...\n"
-    
+
     dconf dump /org/gnome/terminal/legacy/profiles:/ > "${DOTFILES_DIR}/gnome-terminal/profiles.dconf"
-    
+
     echo -e "\n\t✅  Done\n"
 }
 

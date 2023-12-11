@@ -45,6 +45,12 @@ if [[ -r $CORP_ZSHRC ]]; then
     source $CORP_ZSHRC
 fi
 
+<<<<<<< HEAD
+=======
+# Load dotfiles
+source "${HOME}/Projects/Tools/dotfiles/data/terminal/source"
+
+>>>>>>> 13d178b (Finish up the setup for dotfiles)
 # Load direnv
 if command -v direnv &> /dev/null
 then

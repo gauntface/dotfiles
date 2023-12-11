@@ -1,6 +1,6 @@
 # shellcheck shell=bash
 
-TERMINAL_DIR="${HOME}/Projects/Tools/dotfiles/terminal"
+TERMINAL_DIR="${HOME}/Projects/Tools/dotfiles/data/terminal"
 
 # Add alises
 source "${TERMINAL_DIR}/aliases"
@@ -40,6 +40,7 @@ case "${OS}" in
 		OS="${OS} - $(awk -F= '/^NAME/{print $2}' /etc/os-release | xargs)"
 		;;
 esac
+
 case "${OS}" in
     "Linux - Ubuntu"*)
         source "${TERMINAL_DIR}/source-ubuntu"

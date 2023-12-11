@@ -13,6 +13,12 @@ source "./steps/gnome-terminal.sh"
 source "./steps/setup-github.sh"
 source "./steps/setup-dotfiles.sh"
 source "./steps/install-golang.sh"
+source "./steps/setup-git.sh"
+source "./steps/install-node.sh"
+source "./steps/install-vscode.sh"
+source "./steps/setup-framework.sh"
+source "./steps/setup-udev.sh"
+source "./steps/setup-private-dotfiles.sh"
 
 function initOSVar() {
   OS="$(uname -s)"
@@ -44,6 +50,7 @@ function setupDirectories() {
     CODE_DIR="${HOME}/Projects/Code"
     DOTFILES_DIR="${TOOLS_DIR}/dotfiles"
     DATA_DIR="${DOTFILES_DIR}/data"
+    PRIV_DOTFILES_DIR="${HOME}/Projects/Tools/private-dotfiles"
 
     logTitle "📂  Setting up directories..."
     echo "\tProjects:\t${PROJECTS_DIR}"
@@ -72,6 +79,7 @@ setupDirectories
 performUpdate
 installDeps
 
+
 # Offer Chrome install early in case we want to setup password etc
 if [[ ! $(command -v "google-chrome") ]]; then
   optionalStep "install Chrome" installChrome
@@ -88,9 +96,20 @@ fi
 
 # Dotfiles are used to setup ZSH and Gnome Terminal
 setupDotfiles
-
 installZSH
 setupGnomeTerminal
-installGolang
+setupGit
 
-echo "🔚  All Done. Please reboot to complete.\n"
+if [[ ! $(command -v "code") ]]; then
+  optionalStep "install VSCode" installVSCode
+else
+  logStepDone "VSCode already installed"
+fi
+
+optionalStep "install Golang" installGolang
+optionalStep "install Node" installNode
+optionalStep "setup Framework Laptop" setupFramework
+optionalStep "setup Udev Rules" setupUdev
+optionalStep "setup Private Dotfiles" setupPrivateDotfiles
+
+echo "🎉  All Done. Please reboot to complete.\n"

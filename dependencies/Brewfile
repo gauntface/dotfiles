@@ -1,1 +1,2 @@
 brew install zsh
+brew install --cask visual-studio-code
