@@ -1,20 +1,20 @@
 #!/bin/bash
 set -euo pipefail
 
-function cloneDotfiles() {
+function clonePublicDotfiles() {
   if [[ -d "${DOTFILES_DIR}" ]]; then
     return
   fi
 
-  logTitle "📑  Cloning dotfiles..."
+  logTitle "📑  Cloning public dotfiles..."
 
   git clone git@github.com:gauntface/dotfiles.git "${DOTFILES_DIR}"
 
   logDone
 }
 
-function updateDotfiles() {
-  logTitle "🔄  Updating dotfiles..."
+function updatePublicDotfiles() {
+  logTitle "🔄  Updating public dotfiles..."
 
   (cd "$DOTFILES_DIR" || exit 1; git fetch origin)
   # The pull may error if there are un commited changes
@@ -23,9 +23,9 @@ function updateDotfiles() {
   logDone
 }
 
-function setupDotfiles() {
-  cloneDotfiles
+function setupPublicDotfiles() {
+  clonePublicDotfiles
 
-  updateDotfiles
+  updatePublicDotfiles
 }
 

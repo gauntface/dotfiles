@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-function cloneDotfiles() {
+function clonePrivateDotfiles() {
   if [[ -d "${PRIV_DOTFILES_DIR}" ]]; then
     return
   fi
@@ -33,9 +33,9 @@ function runPrivateDotfileSetup() {
 }
 
 function setupPrivateDotfiles() {
-  cloneDotfiles
+  clonePrivateDotfiles
 
-  updateDotfiles
+  updatingPrivateDotfiles
 
   # runPrivateDotfileSetup
 }

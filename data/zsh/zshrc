@@ -10,10 +10,12 @@ if [[ $hostname == *".local" ]] || [[ $hostname == *".home" ]]; then
     DRACULA_ARROW_ICON="(づ｡◕‿‿◕｡)づ "
 elif [[ $hostname == "microboss" ]]; then
     DRACULA_ARROW_ICON="(つ▀¯▀)つ "
-elif [[ $hostname == "gauntface-m1" ]] || [[ $hostname == "gauntface-framework" ]]; then
-    DRACULA_ARROW_ICON="（っ＾▿＾）"
+elif [[ $hostname == "gauntface-"* ]]; then
+    DRACULA_ARROW_ICON="（っ＾▿＾） "
+elif [[ $hostname == "dev-matt"* ]]; then
+    DRACULA_ARROW_ICON="[¬º-°]¬ "
 else
-    DRACULA_ARROW_ICON="【・ヘ・?】"
+    DRACULA_ARROW_ICON="【・ヘ・?】 "
 fi
 
 # Allow oh-my-zsh to automatically update

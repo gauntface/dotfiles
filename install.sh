@@ -11,13 +11,13 @@ source "./steps/install-chrome.sh"
 source "./steps/install-zsh.sh"
 source "./steps/gnome-terminal.sh"
 source "./steps/setup-github.sh"
-source "./steps/setup-dotfiles.sh"
 source "./steps/install-golang.sh"
 source "./steps/setup-git.sh"
 source "./steps/install-node.sh"
 source "./steps/install-vscode.sh"
 source "./steps/setup-framework.sh"
 source "./steps/setup-udev.sh"
+source "./steps/setup-public-dotfiles.sh"
 source "./steps/setup-private-dotfiles.sh"
 
 function initOSVar() {
@@ -95,7 +95,7 @@ else
 fi
 
 # Dotfiles are used to setup ZSH and Gnome Terminal
-setupDotfiles
+setupPublicDotfiles
 installZSH
 setupGnomeTerminal
 setupGit

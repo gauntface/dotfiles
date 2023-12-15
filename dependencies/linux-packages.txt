@@ -3,3 +3,4 @@ xclip
 gimp
 inkscape
 zsh
+direnv

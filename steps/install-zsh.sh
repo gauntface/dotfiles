@@ -3,7 +3,12 @@ set -euo pipefail
 
 function installOhMyZSH() {
   logTitle "📦  Installing oh-my-zsh..."
-  if [[ -n "${ZSH}" && -d "${ZSH}" ]]; then
+  # oh-my-zsh will fail if the oh-my-zsh file already exists
+  # This directory should be install on the ZSH var, but that
+  # may not be set if the install fails for any reason.
+  local zshDefault="${HOME}/.oh-my-zsh"
+  local zsh="${ZSH:-$zshDefault}"
+  if [[ -d "${zsh}" ]]; then
     logDone
     return
   fi
@@ -14,7 +19,8 @@ function installOhMyZSH() {
 
 function installZSHDraculaTheme() {
   logTitle "📦  Installing Dracula theme for zsh..."
-  if [[ -n "${ZSH}" && -d "${ZSH}" ]]; then
+  # Check the ZSH theme is not already installed
+  if [[ -d "${HOME}/.custom-zsh/themes/dracula" ]]; then
     logDone
     return
   fi
@@ -45,7 +51,9 @@ function switchToZSH() {
   fi
 
   # Changing shell requires user input.
-  chsh -s $(which zsh)
+  enableTTY
+  sudo chsh -s "$(which zsh)" "$(whoami)"
+  disableTTY
   logDone
 }
 
