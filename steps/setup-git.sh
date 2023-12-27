@@ -2,7 +2,7 @@
 set -euo pipefail
 
 function setupGitEmail() {
-  git_email=$(git config --global user.email)
+  git_email=$(git config --global user.email || true)
 
   if [[ -n $git_email ]]; then
     return

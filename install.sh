@@ -67,6 +67,12 @@ else
   logStepDone "Chrome already installed"
 fi
 
+if [[ ! $(command -v "code") ]]; then
+  optionalStep "install VSCode" installVSCode
+else
+  logStepDone "VSCode already installed"
+fi
+
 # GitHub needs to be setup before we can clone the dotfiles
 if [[ ! $(git ls-remote "git@github.com:gauntface/dotfiles.git") ]]; then
   optionalStep "setup GitHub" setupGitHub
@@ -79,12 +85,6 @@ setupPublicDotfiles
 installZSH
 setupGnomeTerminal
 setupGit
-
-if [[ ! $(command -v "code") ]]; then
-  optionalStep "install VSCode" installVSCode
-else
-  logStepDone "VSCode already installed"
-fi
 
 optionalStep "install Golang" installGolang
 optionalStep "install Node" installNode
