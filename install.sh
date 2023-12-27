@@ -4,6 +4,7 @@ set -euo pipefail
 source "./libs/logging.sh"
 source "./libs/error-handling.sh"
 source "./libs/optional-step.sh"
+source "./libs/directories.sh"
 
 source "./steps/update.sh"
 source "./steps/install-deps.sh"
@@ -42,27 +43,6 @@ function initOSVar() {
           ;;
   esac
   export OS
-}
-
-function setupDirectories() {
-    PROJECTS_DIR="${HOME}/Projects"
-    TOOLS_DIR="${HOME}/Projects/Tools"
-    CODE_DIR="${HOME}/Projects/Code"
-    DOTFILES_DIR="${TOOLS_DIR}/dotfiles"
-    DATA_DIR="${DOTFILES_DIR}/data"
-    PRIV_DOTFILES_DIR="${HOME}/Projects/Tools/private-dotfiles"
-
-    logTitle "📂  Setting up directories..."
-    echo "\tProjects:\t${PROJECTS_DIR}"
-    echo "\tTools:\t\t${TOOLS_DIR}"
-    echo "\tCode:\t\t${CODE_DIR}"
-    echo ""
-
-    mkdir -p "${PROJECTS_DIR}"
-    mkdir -p "${TOOLS_DIR}"
-    mkdir -p "${CODE_DIR}"
-
-    logDone
 }
 
 # -e means 'enable interpretation of backslash escapes'

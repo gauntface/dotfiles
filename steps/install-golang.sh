@@ -2,7 +2,7 @@
 set -euo pipefail
 
 function downloadGo() {
-    echo -e "\t📂  Downloading go..."
+    echo "\t📂  Downloading go..."
     latestVersion="$(curl -s https://go.dev/VERSION?m=text)"
     GO_TAR="${latestVersion}.linux-amd64.tar.gz"
 
@@ -19,18 +19,18 @@ function deleteOldGo() {
         return
     fi
 
-    echo -e "\t🗑️  Deleting previous go installation in ${GO_DIR}..."
+    echo "\t🗑️  Deleting previous go installation in ${GO_DIR}..."
     sudo rm -rf "${GO_DIR}"
 }
 
 function unpackGo() {
-    echo -e "\t📂  Unpacking go to /usr/local..."
+    echo "\t📂  Unpacking go to /usr/local..."
 
     sudo tar -C /usr/local -xzf "${GO_TAR}"
 }
 
 function deleteTar() {
-    echo -e "\t🗑️  Deleting go tar..."
+    echo "\t🗑️  Deleting go tar..."
     rm "${GO_TAR}"
 }
 

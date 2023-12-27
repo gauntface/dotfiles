@@ -3,37 +3,48 @@ set -euo pipefail
 
 source "./libs/logging.sh"
 source "./libs/error-handling.sh"
-source "./libs/optional-step.sh"
+source "./libs/directories.sh"
+
+projects_dir=${PROJECTS_DIR-"${HOME}/Projects"}
+data_dir=${DATA_DIR-"${HOME}/Projects/Tools/dotfiles/data"}
 
 function checkUncommittedWork() {
-    echo -e "🛠️  Check uncommitted work...\n"
+    echo "🛠️  Check uncommitted work...\n"
 
-    cd $PROJECTS_DIR && find . -type d -name '.git' | while read dir ; do sh -c "cd $dir/../ && echo -e \"\nStatus in ${dir//\.git/}\n\" && git status -s" ; done
+    enableTTY
+    cd "${projects_dir}" && find . -type d -name '.git' | while read -r dir ; do sh -c "cd $dir/../ && echo -e \"\nStatus in ${dir//\.git/}\n\" && git status -s" ; done
+    disableTTY
 
-    echo -e "\n\t️Come back once all work is committed...\n"
+    echo "\n\t️Come back once all work is committed...\n"
 
+    enableTTY
     select yn in "Done" "Stop"; do
         case $yn in
             Done )
-                echo -e "\n\t✅  Done\n"
+                disableTTY
+                logDone
                 break;;
             Stop )
-                echo -e "\n\t🛑 Stopping script due to uncommited work.\n"
+                echo "\n\t🛑 Stopping script due to uncommited work.\n"
                 exit 123;;
         esac
     done
 }
 
 function checkTerminalProfile() {
-    echo -e "🛠️  Check gnome terminal profile is up-to-date...\n"
+    echo "🛠️  Check gnome terminal profile is up-to-date...\n"
 
-    dconf dump /org/gnome/terminal/legacy/profiles:/ > "${DOTFILES_DIR}/gnome-terminal/profiles.dconf"
+    dconf dump /org/gnome/terminal/legacy/profiles:/ > "${data_dir}/gnome-terminal/profiles.dconf"
 
-    echo -e "\n\t✅  Done\n"
+    logDone
 }
 
-# -e means 'enable interpretation of backslash escapes'
-echo -e "\n🗳️  Checks to run before re-installing OS\n"
+initLogging
+
+echo ""
+echo "🗳️  Checks to run before re-installing OS"
+echo "\t🪵  Logs: ${ERROR_LOG}"
+echo ""
 
 checkUncommittedWork
 
