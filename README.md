@@ -5,7 +5,7 @@
 ### Fedora
 
 ```bash
-sudo yum install curl && bash <(curl -s "https://raw.githubusercontent.com/gauntface/dotfiles/master/bootstrap.sh?$(date +%s)")
+sudo dnf install curl && bash <(curl -s "https://raw.githubusercontent.com/gauntface/dotfiles/master/bootstrap.sh?$(date +%s)")
 ```
 
 ### Ubuntu
