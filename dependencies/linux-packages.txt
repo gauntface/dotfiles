@@ -1,0 +1,6 @@
+git
+xclip
+gimp
+inkscape
+zsh
+direnv

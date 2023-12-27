@@ -1,0 +1,4 @@
+# We override echo and add -e, so safe to
+# to ignore this.
+# https://www.shellcheck.net/wiki/SC2028
+disable=SC2028
