@@ -26,11 +26,15 @@ alias gc="git clean -fdx"
 
 # Open the Pull Request URL for your current directory's branch (base branch defaults to main)
 function openpr() {
-  github_url=$(git remote -v | awk '/fetch/{print $2}' | sed -Ee 's#(git@|git://)#https://#' -e 's@com:@com/@' -e 's%\.git$%%' | awk '/github/');
-  branch_name=$(git symbolic-ref HEAD | cut -d"/" -f 3,4);
-  default_branch_name=$(git symbolic-ref refs/remotes/origin/HEAD | cut -d"/" -f 4,5);
-  pr_url="$github_url/compare/${default_branch_name}...$branch_name"
-  open "$pr_url";
+  if [[ $(command -v "gh") ]]; then
+    gh pr create --web
+  else
+    github_url=$(git remote -v | awk '/fetch/{print $2}' | sed -Ee 's#(git@|git://)#https://#' -e 's@com:@com/@' -e 's%\.git$%%' | awk '/github/');
+    branch_name=$(git symbolic-ref HEAD | cut -d"/" -f 3,4);
+    default_branch_name=$(git symbolic-ref refs/remotes/origin/HEAD | cut -d"/" -f 4,5);
+    pr_url="$github_url/compare/${default_branch_name}...$branch_name"
+    open "$pr_url";
+  fi
 }
 
 # Python
