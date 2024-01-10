@@ -13,6 +13,7 @@ source "./steps/install-zsh.sh"
 source "./steps/gnome-terminal.sh"
 source "./steps/setup-github.sh"
 source "./steps/install-golang.sh"
+source "./steps/install-github-cli.sh"
 source "./steps/setup-git.sh"
 source "./steps/install-node.sh"
 source "./steps/install-vscode.sh"
@@ -67,6 +68,7 @@ else
   logStepDone "Chrome already installed"
 fi
 
+# Offer VSCode install early in case we want to edit the dotfiles
 if [[ ! $(command -v "code") ]]; then
   optionalStep "install VSCode" installVSCode
 else
@@ -86,8 +88,19 @@ installZSH
 setupGnomeTerminal
 setupGit
 
+if [[ ! $(command -v "node") ]]; then
+  optionalStep "install Node" installNode
+else
+  logStepDone "Node already installed"
+fi
+
+if [[ ! $(command -v "gh") ]]; then
+  optionalStep "install GitHUB CLI" installGitHubCLI
+else
+  logStepDone "GitHub CLI already installed"
+fi
+
 optionalStep "install Golang" installGolang
-optionalStep "install Node" installNode
 optionalStep "setup Framework Laptop" setupFramework
 optionalStep "setup Udev Rules" setupUdev
 optionalStep "setup Private Dotfiles" setupPrivateDotfiles
