@@ -4,9 +4,6 @@ build/
 dist/
 tmp/
 
-# Hugo
-public/
-
 # Node
 node_modules/
 
