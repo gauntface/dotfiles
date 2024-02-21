@@ -5,3 +5,15 @@ open() {
     xdg-open "$1" > /dev/null 2>&1
 }
 
+# Function to check for updates and install them
+check_and_install_updates() {
+    # Run package manager update command
+    sudo dnf -y update
+}
+
+# Check if a week has passed since the last update check
+if [ $(($(date +%s) - $(stat -c %Y ~/.last_update))) -ge $((7*24*3600)) ]; then
+    # If a week has passed, update the system and record the current time
+    check_and_install_updates
+    date +%s > ~/.last_update
+fi
