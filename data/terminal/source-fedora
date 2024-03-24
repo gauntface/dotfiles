@@ -11,6 +11,11 @@ check_and_install_updates() {
     sudo dnf -y update
 }
 
+# Create .last_update if it doesn't exist
+if [ ! -f ~/.last_update ]; then
+    date +%s > ~/.last_update
+fi
+
 # Check if a week has passed since the last update check
 if [ $(($(date +%s) - $(stat -c %Y ~/.last_update))) -ge $((7*24*3600)) ]; then
     # If a week has passed, update the system and record the current time
