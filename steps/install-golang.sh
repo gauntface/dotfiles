@@ -3,7 +3,7 @@ set -euo pipefail
 
 function downloadGo() {
     echo "\t📂  Downloading go..."
-    latestVersion="$(curl -s https://go.dev/VERSION?m=text)"
+    latestVersion=$(curl -s "https://go.dev/VERSION?m=text" | head -n1)
     GO_TAR="${latestVersion}.linux-amd64.tar.gz"
 
     if [ -f "${GO_TAR}" ]
