@@ -25,8 +25,8 @@ function installNode() {
         sudo apt-get install -y nodejs
         ;;
     "Linux - Fedora"*)
-        sudo dnf install -y "https://rpm.nodesource.com/pub_${node_version}.x/nodistro/repo/nodesource-release-nodistro-1.noarch.rpm"
-        sudo dnf install -y --setopt=nodesource-nodejs.module_hotfixes=1 nodejs
+        curl -fsSL "https://rpm.nodesource.com/setup_${node_version}.x" | bash -
+        sudo dnf install -y nodejs
         ;;
   esac
 
