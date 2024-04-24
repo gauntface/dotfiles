@@ -6,6 +6,7 @@ source "./libs/error-handling.sh"
 source "./libs/optional-step.sh"
 source "./libs/directories.sh"
 
+source "./steps/init-os.sh"
 source "./steps/update.sh"
 source "./steps/install-deps.sh"
 source "./steps/install-chrome.sh"
@@ -22,29 +23,7 @@ source "./steps/setup-udev.sh"
 source "./steps/setup-public-dotfiles.sh"
 source "./steps/setup-private-dotfiles.sh"
 
-function initOSVar() {
-  OS="$(uname -s)"
-  case "${OS}" in
-    Linux*)
-      OS="${OS} - $(awk -F= '/^NAME/{print $2}' /etc/os-release | xargs)"
-      ;;
-  esac
 
-  case "${OS}" in
-      "Linux - Ubuntu"* | "Linux - Debian"*)
-          ;;
-      "Linux - Fedora"*)
-          ;;
-      Darwin*)
-          # NOOP
-          ;;
-      *)
-          echo "\t🤷 Unknown platform '${OS}'"
-          exit 1
-          ;;
-  esac
-  export OS
-}
 
 # -e means 'enable interpretation of backslash escapes'
 initOSVar

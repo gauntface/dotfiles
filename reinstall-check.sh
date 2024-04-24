@@ -5,6 +5,9 @@ source "./libs/logging.sh"
 source "./libs/error-handling.sh"
 source "./libs/directories.sh"
 
+source "./steps/init-os.sh"
+source "./steps/check-installed-pkgs.sh"
+
 projects_dir=${PROJECTS_DIR-"${HOME}/Projects"}
 data_dir=${DATA_DIR-"${HOME}/Projects/Tools/dotfiles/data"}
 
@@ -39,6 +42,7 @@ function checkTerminalProfile() {
     logDone
 }
 
+initOSVar
 initLogging
 
 echo ""
@@ -46,6 +50,10 @@ echo "🗳️  Checks to run before re-installing OS"
 echo "\t🪵  Logs: ${ERROR_LOG}"
 echo ""
 
+setupDirectories
+
 checkUncommittedWork
 
 checkTerminalProfile
+
+checkInstalledPackages
