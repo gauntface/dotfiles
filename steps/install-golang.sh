@@ -10,7 +10,7 @@ function downloadGo() {
     then
         rm "${GO_TAR}" # Remove file if it already exists
     fi
-    wget --quiet "https://dl.google.com/go/${GO_TAR}"
+    wget --quiet "https://go.dev/dl/${GO_TAR}"
 }
 
 function deleteOldGo() {
