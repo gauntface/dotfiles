@@ -1,7 +1,6 @@
 cups-devel
 dconf
 direnv
-ffmpeg
 gcc-c++
 gettext
 gimp
