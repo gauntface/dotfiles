@@ -22,7 +22,6 @@ transmission
 vlc
 xclip
 xdg-utils
-zoom
 zsh
 webp-pixbuf-loader
 avif-pixbuf-loader
