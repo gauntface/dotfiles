@@ -1,11 +1,6 @@
-containerd.io
 cups-devel
 dconf
 direnv
-docker-buildx-plugin
-docker-ce
-docker-ce-cli
-docker-compose-plugin
 ffmpeg
 gcc-c++
 gettext
@@ -24,8 +19,6 @@ obs-studio-plugin-x264
 pdfarranger
 pdfshuffler
 transmission
-trezor-bridge
-trezor-udev
 vlc
 xclip
 xdg-utils
