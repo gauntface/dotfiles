@@ -1,0 +1,5 @@
+# Keychron Q5 Pro
+SUBSYSTEM=="hidraw", ATTR{idVendor}=="3434", ATTR{idProduct}=="0650", MODE="0660", GROUP="plugdev"
+
+# Keychron Q10 Pro
+SUBSYSTEM=="hidraw", ATTR{idVendor}=="3434", ATTR{idProduct}=="06a0", MODE="0660", GROUP="plugdev"
