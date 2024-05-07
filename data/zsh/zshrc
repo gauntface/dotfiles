@@ -12,7 +12,7 @@ elif [[ $hostname == "microboss" ]]; then
     DRACULA_ARROW_ICON="(つ▀¯▀)つ "
 elif [[ $hostname == "gauntface-"* ]]; then
     DRACULA_ARROW_ICON="（っ＾▿＾） "
-elif [[ $hostname == "dev-matt"* ]]; then
+elif [[ $hostname == "dev-matt"* ]] || [[ $hostname == "matt-dev"* ]]; then
     DRACULA_ARROW_ICON="[¬º-°]¬ "
 else
     DRACULA_ARROW_ICON="【・ヘ・?】 "

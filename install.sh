@@ -79,9 +79,16 @@ else
   logStepDone "GitHub CLI already installed"
 fi
 
+# Install Golang if it's not already installed
 optionalStep "install Golang" installGolang
+
+# Setup Framework Laptop if it's not already setup
 optionalStep "setup Framework Laptop" setupFramework
+
+# Setup Udev Rules if it's not already setup
 optionalStep "setup Udev Rules" setupUdev
+
+# Setup Private Dotfiles if it's not already setup
 optionalStep "setup Private Dotfiles" setupPrivateDotfiles
 
 echo "🎉  All Done. Please reboot to complete.\n"
