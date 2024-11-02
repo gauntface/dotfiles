@@ -11,14 +11,72 @@ check_and_install_updates() {
     sudo dnf -y update
 }
 
-# Create .last_update if it doesn't exist
-if [ ! -f ~/.last_update ]; then
-    date +%s > ~/.last_update
+# Define the paths for the last_update and pending_update files
+DOTFILES_CONFIG_DIR="${HOME}/.config/dotfiles"
+LAST_UPDATE_FILE="${DOTFILES_CONFIG_DIR}/last_update"
+PENDING_UPDATE_FILE="${DOTFILES_CONFIG_DIR}/pending_update"
+
+# Create dotfiles config directory if it doesn't exist
+mkdir -p "${DOTFILES_CONFIG_DIR}"
+
+# Create last_update file if it doesn't exist
+if [ ! -f "${LAST_UPDATE_FILE}" ]; then
+    date +%s > "${LAST_UPDATE_FILE}"
 fi
 
-# Check if a week has passed since the last update check
-if [ $(($(date +%s) - $(stat -c %Y ~/.last_update))) -ge $((7*24*3600)) ]; then
-    # If a week has passed, update the system and record the current time
+# Function to check if an update is pending
+is_update_in_progress() {
+    if [ -f "${PENDING_UPDATE_FILE}" ]; then
+        local pending_time
+        local current_time
+        local time_diff
+
+        pending_time=$(cat "${PENDING_UPDATE_FILE}")
+        current_time=$(date +%s)
+        time_diff=$((current_time - pending_time))
+
+        # If the pending update is less than 2 hours old
+        if [ $time_diff -lt 7200 ]; then
+            return 0  # True, update is pending
+        else
+            # Remove stale pending update file
+            rm "${PENDING_UPDATE_FILE}"
+        fi
+    fi
+    return 1  # False, no pending update
+}
+
+# Function to check if a week has passed since the last update
+is_update_due() {
+    local last_update_time
+    local current_time
+    local time_since_last_update
+
+    last_update_time=$(cat "${LAST_UPDATE_FILE}")
+    current_time=$(date +%s)
+    time_since_last_update=$((current_time - last_update_time))
+
+    # Check if a week (7 days) has passed
+    if [ $time_since_last_update -ge $((7*24*3600)) ]; then
+        return 0  # True, update is due
+    fi
+    return 1  # False, update is not due
+}
+
+# Check if a week has passed since the last update check and no update is pending
+if is_update_due && ! is_update_in_progress; then
+    echo "📦  Update system..."
+    echo ""
+
+    # Create pending update file
+    date +%s > "${PENDING_UPDATE_FILE}"
+
+    # Perform the update
     check_and_install_updates
-    date +%s > ~/.last_update
+
+    # Update the last update time
+    date +%s > "${LAST_UPDATE_FILE}"
+
+    # Remove the pending update file
+    rm "${PENDING_UPDATE_FILE}"
 fi
