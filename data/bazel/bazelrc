@@ -1,1 +1,1 @@
-test --test_output_all
+test --test_output=all --cache_test_results=no
