@@ -10,7 +10,7 @@ function setupBazelRC() {
     rm "${bazelrc_file}"
   fi
 
-  printf "source  %s/bazel/bazelrc\n" "$DATA_DIR" > "${bazelrc_file}"
+  ln -s "${DATA_DIR}/bazel/bazelrc" "${bazelrc_file}"
   logDone
 }
 
