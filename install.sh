@@ -16,6 +16,7 @@ source "./steps/setup-github.sh"
 source "./steps/install-golang.sh"
 source "./steps/install-github-cli.sh"
 source "./steps/setup-git.sh"
+source "./steps/setup-bazel.sh"
 source "./steps/install-node.sh"
 source "./steps/install-vscode.sh"
 source "./steps/setup-framework.sh"
@@ -66,6 +67,7 @@ setupPublicDotfiles
 installZSH
 setupGnomeTerminal
 setupGit
+setupBazel
 
 if [[ ! $(command -v "node") ]]; then
   optionalStep "install Node" installNode

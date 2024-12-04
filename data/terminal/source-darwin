@@ -1,2 +1,7 @@
 export EDITOR=nano
 export VISUAL="$EDITOR"
+
+coreutils_dir="/opt/homebrew/opt/coreutils/libexec/gnubin"
+if [[ -d $coreutils_dir ]]; then
+    export PATH="$coreutils_dir:$PATH"
+fi
