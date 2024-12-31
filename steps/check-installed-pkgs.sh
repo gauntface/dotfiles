@@ -11,7 +11,7 @@ function checkInstalledPackages() {
 
         touch "$fileNew"
 
-        dnf repoquery --userinstalled --qf "%{name}" > "$fileNew"
+        dnf repoquery --userinstalled --qf "%{name}" | grep -Ev '^kernel-|^kernel$' > "$fileNew"
         if diff "$fileOld" "$fileNew" >/dev/null; then
           logStepDone "Installed packages match"
         else
