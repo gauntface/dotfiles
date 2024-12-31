@@ -14,13 +14,16 @@ function downloadGo() {
 }
 
 function deleteOldGo() {
+    set +u
     if [ ! -d "${GO_DIR}" ]
     then
+        set -u
         return
     fi
 
     echo "\t🗑️  Deleting previous go installation in ${GO_DIR}..."
     sudo rm -rf "${GO_DIR}"
+    set -u
 }
 
 function unpackGo() {

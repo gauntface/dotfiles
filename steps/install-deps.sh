@@ -18,7 +18,7 @@ function installDeps() {
             # shellcheck disable=SC2046
             sudo dnf install -y $(cat ./dependencies/linux-packages.txt)
             # shellcheck disable=SC2046
-            sudo dnf install -y $(cat ./dependencies/fedora-packages.txt)
+            sudo dnf install -y $(cat ./dependencies/fedora-packages.txt) --skip-unavailable
             ;;
         Darwin*)
             brew bundle install --file ./dependencies/Brewfile
