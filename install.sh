@@ -23,7 +23,7 @@ source "./steps/setup-framework.sh"
 source "./steps/setup-udev.sh"
 source "./steps/setup-public-dotfiles.sh"
 source "./steps/setup-private-dotfiles.sh"
-
+source "./steps/setup-docker.sh"
 
 
 # -e means 'enable interpretation of backslash escapes'
@@ -68,6 +68,7 @@ installZSH
 setupGnomeTerminal
 setupGit
 setupBazel
+setupDocker
 
 if [[ ! $(command -v "node") ]]; then
   optionalStep "install Node" installNode
