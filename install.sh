@@ -24,6 +24,7 @@ source "./steps/setup-udev.sh"
 source "./steps/setup-public-dotfiles.sh"
 source "./steps/setup-private-dotfiles.sh"
 source "./steps/setup-docker.sh"
+source "./steps/setup-gnome-dock.sh"
 
 
 # -e means 'enable interpretation of backslash escapes'
@@ -69,6 +70,7 @@ setupGnomeTerminal
 setupGit
 setupBazel
 setupDocker
+setupGnomeDock
 
 if [[ ! $(command -v "node") ]]; then
   optionalStep "install Node" installNode

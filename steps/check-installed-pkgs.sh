@@ -7,11 +7,14 @@ function checkInstalledPackages() {
   case "${OS}" in
     "Linux - Fedora"*)
         fileOld="${DOTFILES_DIR}/dependencies/fedora-packages.txt"
+        fileQuery="${DOTFILES_DIR}/dependencies/fedora-packages.query.txt"
         fileNew="${DOTFILES_DIR}/dependencies/fedora-packages.latest.txt"
 
         touch "$fileNew"
 
-        dnf repoquery --userinstalled --qf "%{name}" | grep -Ev '^kernel-|^kernel$' > "$fileNew"
+        dnf repoquery --userinstalled --qf "%{name} - %{reason}\n" | grep -Ev '^kernel-|^kernel -' > "$fileQuery"
+        grep " - User" "$fileQuery" | sed 's/ - User$//' > "$fileNew"
+
         if diff "$fileOld" "$fileNew" >/dev/null; then
           logStepDone "Installed packages match"
         else
