@@ -82,10 +82,11 @@ else
 fi
 
 # Install Golang if it's not already installed
-optionalStep "install Golang" installGolang
-
-# Setup Framework Laptop if it's not already setup
-optionalStep "setup Framework Laptop" setupFramework
+if [[ ! $(command -v "gh") ]]; then
+  optionalStep "install Golang" installGolang
+else
+  logStepDone "Golang already installed"
+fi
 
 # Setup Udev Rules if it's not already setup
 optionalStep "setup Udev Rules" setupUdev
