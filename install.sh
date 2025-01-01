@@ -19,7 +19,7 @@ source "./steps/setup-git.sh"
 source "./steps/setup-bazel.sh"
 source "./steps/install-node.sh"
 source "./steps/install-vscode.sh"
-source "./steps/setup-framework.sh"
+source "./steps/setup-chrome.sh"
 source "./steps/setup-udev.sh"
 source "./steps/setup-public-dotfiles.sh"
 source "./steps/setup-private-dotfiles.sh"
@@ -48,6 +48,9 @@ if [[ ! $(command -v "google-chrome") ]]; then
 else
   logStepDone "Chrome already installed"
 fi
+
+# Offer Chrome setup
+optionalStep "setup Chrome" setupChrome
 
 # Offer VSCode install early in case we want to edit the dotfiles
 if [[ ! $(command -v "code") ]]; then
