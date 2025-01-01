@@ -25,6 +25,7 @@ source "./steps/setup-public-dotfiles.sh"
 source "./steps/setup-private-dotfiles.sh"
 source "./steps/setup-docker.sh"
 source "./steps/setup-gnome-dock.sh"
+source "./steps/setup-wallpaper.sh"
 
 
 # -e means 'enable interpretation of backslash escapes'
@@ -74,6 +75,7 @@ setupGit
 setupBazel
 setupDocker
 setupGnomeDock
+setupWallpaper
 
 if [[ ! $(command -v "node") ]]; then
   optionalStep "install Node" installNode

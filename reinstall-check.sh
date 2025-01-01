@@ -8,6 +8,7 @@ source "./libs/directories.sh"
 source "./steps/init-os.sh"
 source "./steps/check-installed-pkgs.sh"
 source "./steps/check-gnome-dock.sh"
+source "./steps/check-wallpaper.sh"
 
 projects_dir=${PROJECTS_DIR-"${HOME}/Projects"}
 data_dir=${DATA_DIR-"${HOME}/Projects/Tools/dotfiles/data"}
@@ -60,3 +61,5 @@ checkTerminalProfile
 checkInstalledPackages
 
 checkGnomeDock
+
+checkWallpaper
