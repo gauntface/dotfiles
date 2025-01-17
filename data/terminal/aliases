@@ -37,5 +37,12 @@ function openpr() {
   fi
 }
 
+function bcb() {
+  echo "\n\n    🧼 Running bazel clean...\n\n"
+  bazel clean
+  echo "\n\n    🏗️  Running bazel build with no cache...\n\n"
+  NO_BAZEL_CACHE=1 bazel build "$@"
+}
+
 # Python
 alias mkvenv="python3 -m venv .venv && source .venv/bin/activate"
