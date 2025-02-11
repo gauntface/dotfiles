@@ -1,1 +1,1 @@
-test --test_output=all --cache_test_results=no
+test --test_output=streamed --cache_test_results=no

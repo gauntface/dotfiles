@@ -28,7 +28,7 @@ function installDeps() {
             sudo dnf install -y $(cat ./dependencies/fedora-packages.txt)
             ;;
         Darwin*)
-            brew bundle install --file ./dependencies/Brewfile
+            # brew bundle install --file ./dependencies/Brewfile
             ;;
     esac
     logDone
