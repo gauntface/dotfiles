@@ -44,5 +44,12 @@ function bcb() {
   NO_BAZEL_CACHE=1 bazel build "$@"
 }
 
+function bct() {
+  echo "\n\n    🧼 Running bazel clean...\n\n"
+  bazel clean
+  echo "\n\n    🧪  Running bazel test with no cache...\n\n"
+  NO_BAZEL_CACHE=1 bazel test "$@"
+}
+
 # Python
 alias mkvenv="python3 -m venv .venv && source .venv/bin/activate"
