@@ -51,5 +51,9 @@ function bct() {
   NO_BAZEL_CACHE=1 bazel test "$@"
 }
 
+function ktlint() {
+   git ls-files -- . | xargs pre-commit run pretty-format-kotlin --files
+}
+
 # Python
 alias mkvenv="python3 -m venv .venv && source .venv/bin/activate"
