@@ -19,7 +19,7 @@ alias t='cd ~/Projects/Tools'
 alias server='python3 -m http.server --bind 127.0.0.1'
 
 # Git
-alias gr="git fetch origin && git reset @{upstream} --hard --recurse-submodule"
+alias gr="git fetch --prune && git fetch origin && git reset @{upstream} --hard --recurse-submodule"
 alias gu="git fetch origin && git pull && gsm"
 alias gsm="git submodule update --init --recursive --remote"
 alias gc="git clean -fdx"
