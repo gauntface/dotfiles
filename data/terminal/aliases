@@ -70,9 +70,10 @@ function dump_ij() {
   mkdir -p ~/thread-dumps
 
   # Capture thread dump with timestamp
-  jstack "$pid" > "$HOME/thread-dumps/intellij-thread-dump-$(date +%Y%m%d-%H%M%S).txt"
+  filePath="$HOME/thread-dumps/intellij-thread-dump-$(date +%Y%m%d-%H%M%S).txt"
+  jstack "$pid" > "$filePath"
 
-  echo "Thread dump saved for PID $pid"
+  echo "Thread dump saved for PID $pid: $filePath"
 }
 
 # Python
