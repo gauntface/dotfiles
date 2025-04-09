@@ -55,5 +55,25 @@ function ktlint() {
    git ls-files -- . | xargs pre-commit run pretty-format-kotlin --files
 }
 
+function dump_ij() {
+  # Get first PID of IntelliJ process
+  local pid
+  pid=$(pgrep -f idea | head -n 1)
+
+  # Verify PID exists
+  if [[ -z "$pid" ]]; then
+    echo "Error: No IntelliJ process found"
+    return 1
+  fi
+
+  # Create output directory if needed
+  mkdir -p ~/thread-dumps
+
+  # Capture thread dump with timestamp
+  jstack "$pid" > "$HOME/thread-dumps/intellij-thread-dump-$(date +%Y%m%d-%H%M%S).txt"
+
+  echo "Thread dump saved for PID $pid"
+}
+
 # Python
 alias mkvenv="python3 -m venv .venv && source .venv/bin/activate"
