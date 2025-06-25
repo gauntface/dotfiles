@@ -57,8 +57,9 @@ function ktlint() {
 
 function dump_ij() {
   # Get first PID of IntelliJ process
+  local process_name="${1:-idea}"
   local pid
-  pid=$(pgrep -f idea | head -n 1)
+  pid=$(pgrep -f "$process_name" | head -n 1)
 
   # Verify PID exists
   if [[ -z "$pid" ]]; then
