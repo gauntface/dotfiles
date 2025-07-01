@@ -77,5 +77,9 @@ function dump_ij() {
   echo "Thread dump saved for PID $pid: $filePath"
 }
 
+function gradle_clean() {
+  ./gradlew clean build --no-build-cache
+}
+
 # Python
 alias mkvenv="python3 -m venv .venv && source .venv/bin/activate"
