@@ -73,9 +73,10 @@ installZSH
 setupGnomeTerminal
 setupGit
 setupBazel
-setupDocker
 setupGnomeDock
 setupWallpaper
+
+optionalStep "setup Docker" setupDocker
 
 if [[ ! $(command -v "node") ]]; then
   optionalStep "install Node" installNode
