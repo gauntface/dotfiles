@@ -8,6 +8,7 @@ NetworkManager-openvpn-gnome - Group
 NetworkManager-ppp - Group
 NetworkManager-pptp-gnome - Group
 NetworkManager-ssh-gnome - Group
+NetworkManager-ssh-selinux - External User
 NetworkManager-vpnc-gnome - Group
 NetworkManager-wifi - Group
 NetworkManager-wwan - Group
@@ -46,9 +47,11 @@ bind-utils - Group
 biosdevname - User
 bluez-cups - Group
 brcmfmac-firmware - Group
+breeze-icon-theme-fedora - External User
 brltty - Group
 btrfs-progs - Group
 bzip2 - Group
+calibre - User
 chrony - Group
 cifs-utils - Group
 cirrus-audio-firmware - Group
@@ -56,9 +59,9 @@ code - User
 code-insiders - User
 colord - Group
 compsize - Group
-containerd.io - User
 coreutils - Group
 cpio - Group
+cpuinfo - External User
 cryptsetup - Group
 cups - Group
 cups-browsed - Group
@@ -102,6 +105,7 @@ ethtool - Group
 evince - Group
 evince-djvu - Group
 exfatprogs - Group
+faad2-libs - External User
 fedora-bookmarks - Group
 fedora-chromium-config - Group
 fedora-flathub-remote - Group
@@ -121,6 +125,7 @@ gamemode - Group
 gcc-c++ - User
 gdm - Group
 gdouros-symbola-fonts - Group
+gegl04-matting-levin - External User
 gh - User
 ghostscript - Group
 gimp - User
@@ -218,6 +223,8 @@ iscsi-initiator-utils - Group
 iwlegacy-firmware - Group
 iwlwifi-dvm-firmware - Group
 iwlwifi-mvm-firmware - Group
+java-21-openjdk - External User
+java-21-openjdk-devel - External User
 julietaula-montserrat-fonts - Group
 kbd - Group
 kbd-legacy - Group
@@ -227,6 +234,9 @@ langpacks-en - User
 less - Group
 libertas-firmware - Group
 libglvnd-gles - Group
+libheif-freeworld - User
+libheif-tools - User
+libopenjph - External User
 libreoffice-calc - Group
 libreoffice-emailmerge - Group
 libreoffice-graphicfilter - Group
@@ -237,6 +247,7 @@ libreoffice-writer - Group
 librsvg2 - Group
 libsane-hpaio - Group
 libva-intel-media-driver - Group
+libyuv - External User
 linux-firmware - Group
 livesys-scripts - User
 logrotate - Group
@@ -261,6 +272,7 @@ mt7xxx-firmware - Group
 mtr - Group
 nautilus - Group
 ncurses - Group
+ncurses-compat-libs - User
 net-tools - Group
 nfs-utils - Group
 nmap-ncat - Group
@@ -290,6 +302,8 @@ pinentry-gnome3 - Group
 pinfo - Group
 pipewire-alsa - Group
 pipewire-gstreamer - Group
+pipewire-jack-audio-connection-kit - External User
+pipewire-jack-audio-connection-kit-libs - External User
 pipewire-pulseaudio - Group
 pipewire-utils - Group
 plocate - Group
@@ -303,8 +317,12 @@ procps-ng - Group
 psacct - Group
 psmisc - Group
 ptyxis - Group
+python3-inotify - External User
 python3-pip - User
+python3-rapidfuzz - External User
+python3-typing-extensions - External User
 qadwaitadecorations-qt5 - Group
+qcom-wwan-firmware - External User
 qemu-guest-agent - Group
 qt5-qtbase - Group
 qt5-qtbase-gui - Group
@@ -344,6 +362,7 @@ systemd - Group
 systemd-oomd-defaults - Group
 systemd-resolved - Group
 systemd-udev - Group
+tailscale - User
 tar - Group
 tcpdump - Group
 teamd - Group
@@ -357,6 +376,7 @@ tracker - Group
 tracker-miners - Group
 transmission - User
 tree - Group
+ttmkfdir - External User
 unoconv - Group
 unzip - Group
 uresourced - Group
@@ -390,6 +410,7 @@ xdg-desktop-portal-gnome - Group
 xdg-desktop-portal-gtk - Group
 xdg-user-dirs-gtk - Group
 xfsprogs - Group
+xorg-x11-fonts-Type1 - External User
 xset - User
 yelp - Group
 zip - Group

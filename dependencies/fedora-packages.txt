@@ -32,6 +32,7 @@ openscad
 pdfarranger
 python3-pip
 rpmfusion-free-release
+tailscale
 transmission
 vlc
 vlc-plugins-extra
