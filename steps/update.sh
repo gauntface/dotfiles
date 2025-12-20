@@ -9,7 +9,7 @@ function performUpdate() {
           sudo apt-get update -y
           ;;
       "Linux - Fedora"*)
-          sudo dnf update -y
+          sudo dnf update --refresh -y
           ;;
   esac
   logDone
