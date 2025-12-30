@@ -1,4 +1,5 @@
-export EDITOR=nano
+nano_editor=$(which nano)
+export EDITOR="$nano_editor"
 export VISUAL="$EDITOR"
 
 coreutils_dir="/opt/homebrew/opt/coreutils/libexec/gnubin"
