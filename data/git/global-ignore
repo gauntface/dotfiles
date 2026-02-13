@@ -36,3 +36,9 @@ __pycache__/
 
 # Env
 .env*
+
+# temp
+.infisical.json
+*.log
+.agents/skills/web-development/
+.claude/*.local.json
