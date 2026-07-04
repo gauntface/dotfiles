@@ -72,8 +72,17 @@ function setupSSHKeys() {
         echo "\tAdd it to https://github.com/settings/keys"
     fi
 
-  # Try and open chrome since it may have been install in the previous step but do not error if it fails
-  xdg-open "http://github.com/settings/keys" > /dev/null 2>&1
+  # Try and open a browser to the page since one may have been installed in a
+  # previous step, but never let this block or fail the install (there may be
+  # no display at all on a remote/headless machine).
+  case "${OS}" in
+      Darwin*)
+          (open "https://github.com/settings/keys" || true) &> /dev/null &
+          ;;
+      Linux*)
+          (xdg-open "https://github.com/settings/keys" || true) &> /dev/null &
+          ;;
+  esac
 
   echo "\t⏳  Press enter to continue..."
   read -r
