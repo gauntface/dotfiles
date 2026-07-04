@@ -91,7 +91,7 @@ else
 fi
 
 # Install Golang if it's not already installed
-if [[ ! $(command -v "gh") ]]; then
+if [[ ! $(command -v "go") ]]; then
   optionalStep "install Golang" installGolang
 else
   logStepDone "Golang already installed"
