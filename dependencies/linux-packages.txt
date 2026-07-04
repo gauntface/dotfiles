@@ -4,3 +4,4 @@ gimp
 inkscape
 zsh
 direnv
+jq
