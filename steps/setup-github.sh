@@ -1,19 +1,50 @@
 #!/bin/bash
 set -euo pipefail
 
-function createGitHubKey() {
-  logTitle "🔑  Creating GitHub key..."
-  local expected_ssh_file=$1
-  if [[ -f "${expected_ssh_file}" ]]; then
-      logDone
+function ensureGitHubSSHConfig() {
+  local ssh_config_file="${HOME}/.ssh/config"
+  local include_file="${DATA_DIR}/ssh/github.config"
+  local include_line="Include ${include_file}"
+
+  touch "${ssh_config_file}"
+  chmod 600 "${ssh_config_file}"
+
+  # Without this, ssh has no idea the key at ~/.ssh/github should be used for
+  # github.com - it only tries the default identity files (id_rsa,
+  # id_ed25519, etc), which don't exist, so auth fails with "Permission
+  # denied (publickey)" even though a perfectly good key was generated.
+  #
+  # This Includes the actual Host block from the dotfiles repo instead of
+  # writing it inline, so it can be tweaked in one place (and picked up via
+  # `git pull`) without touching ~/.ssh/config or re-running this script on
+  # every machine.
+  if grep -qF "${include_line}" "${ssh_config_file}"; then
       return
   fi
 
-  enableTTY
+  # Prepended, not appended: ssh_config uses first-obtained-value-wins, so
+  # this must come before any pre-existing broader `Host *` block.
+  {
+    printf '%s\n\n' "${include_line}"
+    cat "${ssh_config_file}"
+  } > "${ssh_config_file}.tmp"
+  mv "${ssh_config_file}.tmp" "${ssh_config_file}"
+  chmod 600 "${ssh_config_file}"
+}
 
-  ssh-keygen -t ed25519 -C "hello@gaunt.dev" -f "${expected_ssh_file}"
+function createGitHubKey() {
+  logTitle "🔑  Creating GitHub key..."
+  local expected_ssh_file=$1
 
-  disableTTY
+  if [[ ! -f "${expected_ssh_file}" ]]; then
+      enableTTY
+
+      ssh-keygen -t ed25519 -C "hello@gaunt.dev" -f "${expected_ssh_file}"
+
+      disableTTY
+  fi
+
+  ensureGitHubSSHConfig
 
   eval "$(ssh-agent -s)"
   ssh-add "${expected_ssh_file}"
