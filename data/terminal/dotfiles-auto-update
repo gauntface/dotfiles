@@ -1,0 +1,50 @@
+# shellcheck shell=bash
+
+# Checks the dotfiles checkout against origin once a day and fast-forwards it
+# if there are no local changes. Mirrors the update-check pattern in
+# source-fedora, but for the git repo instead of OS packages.
+checkDotfilesUpdate() {
+    local dotfilesDir="${HOME}/Projects/Tools/dotfiles"
+    if [[ ! -d "${dotfilesDir}/.git" ]]; then
+        return
+    fi
+
+    local configDir="${HOME}/.config/dotfiles"
+    local lastCheckFile="${configDir}/last_repo_check"
+    mkdir -p "${configDir}"
+
+    if [[ -f "${lastCheckFile}" ]]; then
+        local lastCheck currentTime
+        lastCheck=$(cat "${lastCheckFile}")
+        currentTime=$(date +%s)
+        if (( currentTime - lastCheck < 86400 )); then
+            return
+        fi
+    fi
+
+    local branch
+    branch=$(git -C "${dotfilesDir}" rev-parse --abbrev-ref HEAD)
+
+    if ! git -C "${dotfilesDir}" fetch --quiet origin "${branch}" 2>/dev/null; then
+        # Offline or remote unreachable - try again next shell instead of
+        # waiting a full day.
+        return
+    fi
+
+    local localHash remoteHash
+    localHash=$(git -C "${dotfilesDir}" rev-parse HEAD)
+    remoteHash=$(git -C "${dotfilesDir}" rev-parse "origin/${branch}")
+
+    if [[ "${localHash}" != "${remoteHash}" ]]; then
+        if [[ -z "$(git -C "${dotfilesDir}" status --porcelain)" ]] && \
+            git -C "${dotfilesDir}" pull --quiet --ff-only origin "${branch}"; then
+            echo "🔄  dotfiles updated to $(git -C "${dotfilesDir}" rev-parse --short HEAD), changes apply in new shells"
+        else
+            echo "⚠️  dotfiles: local changes in ${dotfilesDir} are blocking an upstream update - resolve manually"
+        fi
+    fi
+
+    date +%s > "${lastCheckFile}"
+}
+
+checkDotfilesUpdate

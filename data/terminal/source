@@ -5,6 +5,9 @@ TERMINAL_DIR="${HOME}/Projects/Tools/dotfiles/data/terminal"
 # Add alises
 source "${TERMINAL_DIR}/aliases"
 
+# Check for dotfiles repo updates once a day
+source "${TERMINAL_DIR}/dotfiles-auto-update"
+
 # Dotfile bin
 export PATH="${TERMINAL_DIR}/bin:$PATH"
 
