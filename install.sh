@@ -17,6 +17,7 @@ source "./steps/install-golang.sh"
 source "./steps/install-github-cli.sh"
 source "./steps/setup-git.sh"
 source "./steps/setup-bazel.sh"
+source "./steps/setup-claude.sh"
 source "./steps/install-node.sh"
 source "./steps/install-vscode.sh"
 source "./steps/setup-chrome.sh"
@@ -73,6 +74,7 @@ installZSH
 setupGnomeTerminal
 setupGit
 setupBazel
+setupClaude
 setupGnomeDock
 setupWallpaper
 
