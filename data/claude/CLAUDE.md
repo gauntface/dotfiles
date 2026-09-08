@@ -17,3 +17,10 @@ Never write comments that:
 - label sections of an otherwise readable function
 
 Keep the ones you do write to a line or two, describing the code as it is now.
+
+# Tests involving time
+
+When a test interacts with time (delays, timeouts, intervals, dates), use the
+test framework's fake timers instead of real waits.
+
+Do not use real `sleep` or `setTimeout` waits in tests.
