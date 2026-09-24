@@ -9,6 +9,7 @@
     "gopls-lsp@claude-plugins-official": true
   },
   "tui": "fullscreen",
+  "feedbackSurveyRate": 0,
   "skipDangerousModePermissionPrompt": true,
   "agentPushNotifEnabled": true
 }
