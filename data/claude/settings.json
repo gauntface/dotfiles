@@ -6,7 +6,13 @@
     "rust-analyzer-lsp@claude-plugins-official": true
   },
   "feedbackSurveyRate": 0,
+  "modelSettings": {
+    "claude-opus-5-5": {
+      "autoCompactWindow": 400000
+    }
+  },
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "switchModelsOnFlag": true
 }
