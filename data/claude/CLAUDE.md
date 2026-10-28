@@ -2,8 +2,6 @@
 
 Always talk in ASD-STE100 Simplified Technical English.
 
-Be extremely concise. Sacrifice grammar for the sake of concision.
-
 # Comments
 
 Do not add comments to code by default.
