@@ -10,6 +10,8 @@ if [[ $hostname == *".local" ]] || [[ $hostname == *".home" ]] || [[ $hostname =
     DRACULA_ARROW_ICON="(づ｡◕‿‿◕｡)づ "
 elif [[ $hostname == "microboss" ]]; then
     DRACULA_ARROW_ICON="(つ▀¯▀)つ "
+elif [[ $hostname == "agentbox" ]]; then
+    DRACULA_ARROW_ICON="ಠ_ಠ "
 elif [[ $hostname == "gauntface-"* ]]; then
     DRACULA_ARROW_ICON="（っ＾▿＾） "
 elif [[ $hostname == "matt-gauntseo-homepod"* ]] || [[ $hostname == "matt-dev"* ]]; then

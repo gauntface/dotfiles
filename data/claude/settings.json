@@ -13,6 +13,7 @@
   },
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
+  "switchModelsOnFlag": true,
   "agentPushNotifEnabled": true,
-  "switchModelsOnFlag": true
+  "tui": "fullscreen"
 }
