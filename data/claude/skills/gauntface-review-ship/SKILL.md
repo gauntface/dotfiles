@@ -1,5 +1,5 @@
 ---
-name: review-ship
+name: gauntface-review-ship
 description: Review current changes with subagents in a loop, apply useful fixes, open a PR, watch CI, fix failures, and optionally merge. Use when the user says "review and ship", "review loop", "review then PR", "ship this", or wants changes reviewed before a PR.
 ---
 
@@ -21,8 +21,9 @@ Never merge unless the user chose merge.
 ## 2. Review
 
 Get the diff against the merge-base with the default branch (include
-uncommitted changes). Launch one subagent per lens, all in one message, in
-parallel. Give each the diff range and repo path, not your own opinion of the
+uncommitted changes). Launch one subagent per lens with the Agent tool, all in
+one message, in parallel. Do not use the Workflow tool and do not ask the user
+about it. Give each the diff range and repo path, not your own opinion of the
 changes. Lenses:
 
 - **Quality**:

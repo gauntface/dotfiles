@@ -1,5 +1,5 @@
 ---
-name: vitest-fake-timers
+name: gauntface-vitest-fake-timers
 description: Use fake timers instead of real waits when writing or fixing Vitest tests that involve setTimeout, setInterval, delays, timeouts, debounce/throttle, or Date/time-dependent behaviour. Triggers on "vitest", "fake timers", "flaky timing test", "setTimeout in a test", "debounce test", "Date.now test".
 ---
 
