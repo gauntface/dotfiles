@@ -3,7 +3,8 @@
     "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1"
   },
   "enabledPlugins": {
-    "rust-analyzer-lsp@claude-plugins-official": true
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "mattpocock-skills@claude-plugins-official": true
   },
   "feedbackSurveyRate": 0,
   "modelSettings": {
@@ -15,5 +16,6 @@
   "theme": "dark",
   "switchModelsOnFlag": true,
   "agentPushNotifEnabled": true,
-  "tui": "fullscreen"
+  "tui": "fullscreen",
+  "model": "opus"
 }
